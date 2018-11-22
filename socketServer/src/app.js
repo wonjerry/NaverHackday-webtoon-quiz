@@ -3,11 +3,9 @@ const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+require('dotenv').config();
 
 const GameRoom = require('./Gameroom.js')
-
-const PORT = 5000
-const HOST = '0.0.0.0'
 
 app.use('/', express.static(path.join(__dirname, '../public')))
 
@@ -28,6 +26,8 @@ io.on('connection', (socket) => {
     console.log(`Client message: ${JSON.stringify(message)}`)
   })
 })
+
+const { HOST, PORT } = process.env
 
 server.listen(PORT, HOST, () => {
   console.log(`Listening on http://${HOST}:${PORT}/`)
