@@ -12,7 +12,7 @@ function isFinish(fireTime, endTime) {
   return new Date(fireTime).getSeconds() == new Date(endTime).getSeconds()
 }
 
-module.exports.startTimer = (
+module.exports.start = (
   startTime,
   endTime,
   fireCallback,

@@ -7,15 +7,14 @@ class Gameroom {
   constructor(io) {
     this.io = io
     this.clients = new Map()
-
-    this.startTimer()
+    this.waitClients()
   }
 
-  startTimer() {
+  waitClients() {
     const startTime = new Date(Date.now())
     const endTime = new Date(startTime.getTime() + WAITING_TIME)
 
-    Timer.startTimer(
+    Timer.start(
       startTime,
       endTime,
       (fireTime) => {
