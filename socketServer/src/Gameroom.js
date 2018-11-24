@@ -6,7 +6,7 @@ const WAITING_TIME = 60 * 3 * 1000
 class Gameroom {
   constructor(io) {
     this.io = io
-    this.clients = []
+    this.clients = new Map()
 
     this.startTimer()
   }
@@ -32,15 +32,15 @@ class Gameroom {
   }
 
   addClient(client) {
-    if (!_.find(this.clients, (ele) => ele.age == client.id)) {
-      this.clients.push(client)
+    if (this.clients.has(client.id)) {
+      this.clients.set(client.id, client)
     }
 
     client.emit('welcome')
   }
 
   removeClient(client) {
-    this.clients = _.remove(this.client, (ele) => ele.id == client.id)
+    this.clients.delete(client.id)
   }
 
   broadCastMessage(eventName, message) {
