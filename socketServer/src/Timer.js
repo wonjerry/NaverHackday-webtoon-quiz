@@ -1,3 +1,4 @@
+const moment = require('moment')
 const schedule = require('node-schedule')
 
 function createOption(startTime, endTime) {
@@ -9,7 +10,7 @@ function createOption(startTime, endTime) {
 }
 
 function isFinish(fireTime, endTime) {
-  return new Date(fireTime).getSeconds() == new Date(endTime).getSeconds()
+  return moment(fireTime).isSameOrAfter(endTime, 'second')
 }
 
 module.exports.start = (

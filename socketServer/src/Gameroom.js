@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const Timer = require('./Timer')
 
 const WAITING_TIME = 60 * 3 * 1000
@@ -48,6 +47,7 @@ class Gameroom {
 
   startGame() {
     // TODO(wonjerry): Implement game logic when game started
+    console.log('Start game')
   }
 }
 
