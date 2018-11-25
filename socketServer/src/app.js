@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
-require('dotenv').config();
+require('dotenv').config()
 
 const GameRoom = require('./Gameroom.js')
 
@@ -14,9 +14,9 @@ const gameroom = new GameRoom(io)
 io.on('connection', (socket) => {
   console.log(`Client has connected!!:  ${socket.id}`)
 
-  socket.on('joinGame', () => {
+  socket.on('join game', (message) => {
     console.log(`Client join Game:  ${socket.id}`)
-    gameroom.addClient(socket)
+    gameroom.addClient(socket, message.nickname)
   })
 
   socket.on('disconnect', () => {
@@ -25,12 +25,8 @@ io.on('connection', (socket) => {
   })
 
   // TODO(wonjerry): get this signal from admin
-  socket.on('startWaitBeforeGame', () => {
-    gameroom.waitClients()
-  })
-
-  socket.on('message', (message) => {
-    console.log(`Client message: ${JSON.stringify(message)}`)
+  socket.on('Register Start time', () => {
+    // Do nothing.
   })
 })
 

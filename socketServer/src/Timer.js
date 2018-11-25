@@ -13,19 +13,17 @@ function isFinish(fireTime, endTime) {
   return moment(fireTime).isSameOrAfter(endTime, 'second')
 }
 
-module.exports.start = (
-  startTime,
-  endTime,
-  fireCallback
-) => (
-  new Promise((resolve, _) => {
+module.exports.start = (millisecond, fireCallback = () => {}) => {
+  const startTime = moment().valueOf()
+  const endTime = startTime + millisecond
+  return new Promise((resolve, _) => {
     const option = createOption(startTime, endTime)
     schedule.scheduleJob(option, (fireTime) => {
-      fireCallback(fireTime)
+      fireCallback(fireTime, endTime)
 
       if (isFinish(fireTime, endTime)) {
         resolve()
       }
     })
   })
-)
+}
