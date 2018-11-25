@@ -12,14 +12,21 @@ app.use('/', express.static(path.join(__dirname, '../public')))
 const gameroom = new GameRoom(io)
 
 io.on('connection', (socket) => {
-  socket.on('join', (message) => {
-    console.log(`Client has connected!!:  ${socket.id}`)
+  console.log(`Client has connected!!:  ${socket.id}`)
+
+  socket.on('joinGame', () => {
+    console.log(`Client join Game:  ${socket.id}`)
     gameroom.addClient(socket)
   })
 
   socket.on('disconnect', () => {
     console.log(`Client has disconnected: ${socket.id}`)
     gameroom.removeClient(socket)
+  })
+
+  // TODO(wonjerry): get this signal from admin
+  socket.on('startWaitBeforeGame', () => {
+    gameroom.waitClients()
   })
 
   socket.on('message', (message) => {

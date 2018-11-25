@@ -16,17 +16,16 @@ function isFinish(fireTime, endTime) {
 module.exports.start = (
   startTime,
   endTime,
-  fireCallback,
-  finishCallback
-) => {
-  const option = createOption(startTime, endTime)
+  fireCallback
+) => (
+  new Promise((resolve, _) => {
+    const option = createOption(startTime, endTime)
+    schedule.scheduleJob(option, (fireTime) => {
+      fireCallback(fireTime)
 
-  schedule.scheduleJob(option, (fireTime) => {
-    fireCallback(fireTime)
-
-    if (isFinish(fireTime, endTime) && finishCallback) {
-      // TODO(wonjerry): Change to Promise
-      finishCallback()
-    }
+      if (isFinish(fireTime, endTime)) {
+        resolve()
+      }
+    })
   })
-}
+)
