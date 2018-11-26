@@ -1,0 +1,1 @@
+export const chatURL = 'http://localhost:8080/websocketChat';

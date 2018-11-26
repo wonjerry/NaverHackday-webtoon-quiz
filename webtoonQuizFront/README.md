@@ -7,5 +7,5 @@ yarn add node-sass <br/>
 yarn add react-router-dom <br/>
 yarn add react-styled-components <br/>
 yarn add react-sweet-progress <br/> 
-yarn add react-stomp 입니다. <br/> 
-  
+yarn add react-stomp <br/>
+yarn add animate.css입니다.
