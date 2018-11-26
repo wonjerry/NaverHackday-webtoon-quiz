@@ -1,0 +1,34 @@
+.score{
+    width: 50%;
+    margin-left: 10%; 
+}
+.react-sweet-progress{
+    margin-bottom: 5%;
+}
+.scoreext{
+    margin-bottom: 10%;
+    font-size : 2em;
+}
+h2{
+    margin-bottom: 0px;
+}
+.explain{
+    margin-bottom: 0px;
+}
+
+.list{
+    position: fixed;
+    margin-left: 35%;
+    top: 5%;
+}
+
+.MuiGrid-container-66{
+    flex-wrap:nowrap !important; 
+    width: 150% !important; 
+}
+
+.chat{
+    position: fixed;
+    margin-left: 39%;
+    top: 30%;
+}

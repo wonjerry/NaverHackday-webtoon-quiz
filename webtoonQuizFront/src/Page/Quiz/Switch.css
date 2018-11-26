@@ -1,0 +1,14 @@
+.Switch-inner{
+    z-index: -1;
+  }
+  .Switch{
+    margin-bottom: 5%;
+  }
+  .quizText{
+    margin-bottom: -13%;
+    font-size : 2em;
+  }
+  .quizNumber{
+    font-size: 0.7em;
+    margin-bottom: 3%;
+  }
