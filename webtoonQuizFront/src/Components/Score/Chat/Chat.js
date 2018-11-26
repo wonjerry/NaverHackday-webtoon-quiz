@@ -14,18 +14,16 @@ class PaperSheet extends Component{
     constructor(props){
         super(props);
         this.state = { 
-            data:[],
-            nickname : props.nickname,  
-            connect: false,
+            data: props.data,
+            nickname : props.nickname, 
+            clientRef :props.clientRef, 
+
         };
       }
 
 
 componentDidMount(){
-    console.log(this.clientRef.state.connected)
-    if(this.clientRef.state.connected){
-        this.setState({connect:true});
-    }
+
 }
 
 sendChat= ()=>{
@@ -33,7 +31,7 @@ sendChat= ()=>{
     if(!(temp==='')){
     var context= this.state.nickname+": ";   
     context += temp;
-    this.clientRef.sendMessage(`/app/chat`,JSON.stringify({'name': context}));
+    this.state.clientRef.sendMessage(`/app/chat`,JSON.stringify({'name': context}));
     document.getElementsByTagName("input").context.value='';}
     else{
         alert("내용을 입력하세요.");
@@ -44,12 +42,12 @@ enterkey=()=>{
 
     if (window.event.key== 'Enter') {
         var temp = document.getElementsByTagName("input").context.value;
-        console.log(this.clientRef)
+
         if(!(temp==='')){
         var context= this.state.nickname+": ";   
         context += temp;
   
-        this.clientRef.sendMessage(`/app/chat`,JSON.stringify({'name': context}));
+        this.state.clientRef.sendMessage(`/app/chat`,JSON.stringify({'name': context}));
         document.getElementsByTagName("input").context.value='';
         }
         else{
@@ -62,33 +60,9 @@ enterkey=()=>{
 
 render(){
 
-    if(!(this.state.connect)){
-        return(
-            <div>
-        <SockJsClient url='http://localhost:8080/websocketChat' topics={['/topic/answer']}
-            onMessage={(msg) => { 
-                var length= this.state.data.length; 
-                this.state.data[length]=msg.content; 
-                this.setState({data:this.state.data});    
-                var el =document.querySelector(".chatList");
-                el.scrollTop+=230;            
-           }}
-            ref={ (client) => { this.clientRef = client }} />
-            </div>
-        );
-    }
-    else{
   return(
     <div className="chat">
-         <SockJsClient url='http://localhost:8080/websocketChat' topics={['/topic/answer']}
-            onMessage={(msg) => { 
-                var length= this.state.data.length; 
-                this.state.data[length]=msg.content; 
-                this.setState({data:this.state.data});    
-                var el =document.querySelector(".chatList");
-                el.scrollTop+=230;            
-           }}
-            ref={ (client) => { this.clientRef = client }} />
+
       
         <Post >
         <List data={this.state.data} props={this.props}/>
@@ -112,7 +86,7 @@ render(){
            
         </Post>
     </div>
-  );}}
+  );}
 
 }
 
