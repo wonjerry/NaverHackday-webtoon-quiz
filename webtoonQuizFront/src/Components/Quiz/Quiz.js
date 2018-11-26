@@ -5,6 +5,7 @@ import './Switch.css'
 import { Line, Circle } from 'rc-progress';
 import Score from '../Score/Score.js';
 import SockJsClient from 'react-stomp';
+import jo from './../../img/jo.png';
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -25,15 +26,15 @@ class Quiz extends React.Component {
     super(props);
     this.state = {
       question: props.question,
-      quizName: "웹툰 퀴즈",
+      quizName: [],
       quizTime:5,    
       quizNumber:1,
       totalUser:'',
       time: 0,
-      count: 0,
+      answerCount: 0,
       answer: 0,
       nickname: props.nickname,
-      scoreOpen: true,
+      scoreOpen: false,
       error : false,
     };
     
@@ -41,7 +42,9 @@ class Quiz extends React.Component {
 
   componentDidMount() {
     setInterval(() => this.progressTime(), 100);
-    this.setState({question:"문제1 : 웹툰 퀴즈입니다. "})
+    this.setState({question:"문제1 : 누구 일까요?? "})
+    this.setState({quizName:["자까","조석","박용제"]})
+    
   }
   
   componentDidCatch(error, info){
@@ -49,21 +52,32 @@ class Quiz extends React.Component {
       error: true ,
     });
   }
-
+  componentWillUnmount(){
+    console.log("df")
+  }
   progressTime() {
     let curruentdate= new Date();     
     let time = curruentdate.getSeconds();
-    if (time<10 ) {
+  
+    if (time<5 ) {
       this.setState({scoreOpen:false});
-      this.setState({time: time*10});
+      this.setState({time: time*20});
     }
-    else if(30<=time && time<40){
+    else if(15<=time && time<20){
       this.setState({scoreOpen:false});
-      this.setState({time: (time-30)*10});
+      this.setState({time: (time-15)*20});
+    }
+    else if(30<=time && time<35){
+      this.setState({scoreOpen:false});
+      this.setState({time: (time-30)*20});
+    }
+    else if(45<=time && time<50){
+      this.setState({scoreOpen:false});
+      this.setState({time: (time-45)*20});
     }
     else {
       this.setState({scoreOpen:true});  
-      this.setState({count: 0});
+      this.setState({answerCount: 0});
     }
   }
 
@@ -81,8 +95,8 @@ class Quiz extends React.Component {
             quiz[i].checked=false;
           }
       }
-      var count = this.state.count;
-      this.setState({count: ++count});
+      var count = this.state.answerCount;
+      this.setState({answerCount: ++count});
     }
     else{
         for(var i=0; i<quiz.length; i++){
@@ -97,8 +111,8 @@ class Quiz extends React.Component {
   }
 
   CheckQuiz(event){
-    if(this.state.count<2){
-      if(this.state.count===1){ 
+    if(this.state.answerCount<2){
+      if(this.state.answerCount===1){ 
        const isChange =window.confirm("마지막 기회입니다. ");
        if(isChange){ this.buttonChange(event,true); }
        else{ this.buttonChange(event,false); }
@@ -119,7 +133,7 @@ class Quiz extends React.Component {
     else{
       if(this.state.scoreOpen){
         return (
-          <Score nickname={this.state.nickname} question={this.state.question} props={this.props}/>
+          <Score nickname={this.state.nickname} question={this.state.question} answer={this.state.answer} quizName={this.state.quizName} time={this.state.time} props={this.props}/>
         );
       }
       else{
@@ -128,14 +142,16 @@ class Quiz extends React.Component {
             <Container>
            
               <Line strokeWidth="2" trailWidth="2" percent={this.state.time} strokeLinecap="square" trailColor="rgba(255,255,255,0.05)" />
+                
                 <Question>
                 {/* <span className="quizNumber">문제{this.state.quizNumber}</span> */}
                     <p className="questionName"> <b>{this.state.question}</b></p>
                 </Question>
+                <img src={jo} alt="img" className="quizImg"/>
 
                <div className="quizDiv">
                 <label className="Switch">
-                  <p className="quizText">1. {this.state.quizName}</p>
+                  <p className="quizText">1. {this.state.quizName[0]}</p>
                   <div className="Switch-inner">            
                     <input type="checkbox" id="quiz" value="1" onClick={this.CheckQuiz.bind(this)}/> 
                     <div className="Switch-bg"></div>
@@ -144,7 +160,7 @@ class Quiz extends React.Component {
                 </label>
 
                 <label className="Switch">
-                <p className="quizText">2. {this.state.quizName}</p>
+                <p className="quizText">2. {this.state.quizName[1]}</p>
                   <div className="Switch-inner">                
                     <input type="checkbox" id="quiz" value="2" onClick={this.CheckQuiz.bind(this)} /> 
                     <div className="Switch-bg"></div>
@@ -153,7 +169,7 @@ class Quiz extends React.Component {
                 </label>
 
                 <label className="Switch">
-                  <p className="quizText">3. {this.state.quizName}</p>
+                  <p className="quizText">3. {this.state.quizName[2]}</p>
                     <div className="Switch-inner">       
                       <input type="checkbox" id="quiz" value="3" onClick={this.CheckQuiz.bind(this)} /> 
                     <div className="Switch-bg"></div>

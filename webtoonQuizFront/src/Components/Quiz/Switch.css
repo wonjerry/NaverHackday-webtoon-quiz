@@ -12,3 +12,6 @@
     font-size: 0.7em;
     margin-bottom: 3%;
   }
+  .quizImg{
+    z-index: -3;
+  }
