@@ -13,11 +13,11 @@ import com.webtoonquiz.repo.QuizRepository;
 public class QuizService {
 
 	@Autowired
-	private QuizRepository repository;
+	private QuizRepository quizRepository;
 
 	public List<Quiz> getAllQuizs() {
 		List<Quiz> list = new ArrayList<>();
-		Iterable<Quiz> Quizs = repository.findAll();
+		Iterable<Quiz> Quizs = quizRepository.findAll();
 
 		Quizs.forEach(list::add);
 
@@ -25,24 +25,24 @@ public class QuizService {
 	}
 
 	public synchronized boolean addQuiz(Quiz quiz) {
-		List<Quiz> list = repository.findByTitle(quiz.getTitle());
+		List<Quiz> list = quizRepository.findByRoundAndNum(quiz.getRound(),quiz.getNum());
 		if (list.size() > 0) {
 			return false;
 		} else {
-			repository.save(quiz);
+			quizRepository.save(quiz);
 			return true;
 		}
 	}
 	
-	public List<Quiz> findByTitle(String title){
-		return repository.findByTitle(title);
+	public List<Quiz> findByRoundAndNumSQL(int round, int num) {
+		return quizRepository.findByRoundAndNumSQL(round, num);
 	}
 	
 	public void updateQuiz(Quiz quiz) {
-		repository.save(quiz);
+		quizRepository.save(quiz);
 	}
 	
 	public void deleteQuiz(long quizId) {
-		repository.delete(quizId);
+		quizRepository.delete(quizId);
 	}
 }

@@ -1,6 +1,7 @@
 package com.webtoonquiz.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,8 +28,11 @@ public class Quiz implements Serializable {
 	@Column(name="quiz_id")
 	private Long id;
 	
-	@Column(name="title")
-	private String title;
+	@Column(name="round")
+	private int round;
+	
+	@Column(name="num")
+	private int num;
 	
 	@Column(name="description")
 	private String description;
@@ -44,10 +48,13 @@ public class Quiz implements Serializable {
 	
 	@Column(name="option_four")
 	private String option_four;
+	
+	@Column(name="showtime")
+	private Timestamp showTime;
 
-	public Quiz(String title, String description, String option_one, String option_two, String option_three, String option_four) {
+	public Quiz(int num, String description, String option_one, String option_two, String option_three, String option_four) {
 		super();
-		this.title = title;
+		this.num = num;
 		this.description = description;
 		this.option_one = option_one;
 		this.option_two = option_two;

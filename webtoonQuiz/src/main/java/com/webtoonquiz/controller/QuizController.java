@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,13 +30,23 @@ public class QuizController {
 	@Autowired
 	private QuizService quizService;
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@GetMapping(value = "/quizs/{round}/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Quiz>> findByTitle(@PathVariable int round, @PathVariable int num) {
+		logger.debug("Calling findByTitle( )");
+		List<Quiz> quizs = quizService.findByRoundAndNumSQL(round, num);
+
+		return new ResponseEntity<List<Quiz>>(quizs, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping(value = "/quizs", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Quiz>> getAll() {
 		logger.debug("Calling getAll( )");
-		
 		return new ResponseEntity<List<Quiz>>(quizService.getAllQuizs(), HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping(value = "/quizs")
 	public ResponseEntity<Void> postQuiz(@RequestBody Quiz quiz) {
 		logger.debug("Calling postQuiz( )");
@@ -47,15 +58,8 @@ public class QuizController {
 
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
-
-	@GetMapping(value = "/quizs/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Quiz>> findByTitle(@PathVariable String title) {
-		logger.debug("Calling findByTitle( )");
-		List<Quiz> quizs = quizService.findByTitle(title);
-		
-		return new ResponseEntity<List<Quiz>>(quizs, HttpStatus.OK);
-	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PutMapping(value = "/quizs")
 	public ResponseEntity<Quiz> putQuiz(@RequestBody Quiz quiz) {
 		quizService.updateQuiz(quiz);
@@ -63,6 +67,7 @@ public class QuizController {
 		return new ResponseEntity<Quiz>(quiz, HttpStatus.OK);		
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@DeleteMapping(value = "/quizs/{id}")
 	public ResponseEntity<Void> deleteQuiz(@PathVariable long id) {
 		logger.debug("Calling deleteQuiz( )");
@@ -70,4 +75,5 @@ public class QuizController {
 		
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
+	
 }
