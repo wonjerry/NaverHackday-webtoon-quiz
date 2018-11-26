@@ -1,0 +1,13 @@
+.chatList{
+    overflow:auto;
+    height: 230px;
+    border: 1px black;
+    width: 143%;
+    margin-bottom: 12%;
+}
+.chatText{
+    text-align: left; 
+}
+h4{
+    text-align: left;
+}
