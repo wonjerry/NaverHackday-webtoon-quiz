@@ -86,10 +86,10 @@ class Gameroom {
       this.game.readyAnswers()
       await this.startCountDown(GAME_WAITING_TIME)
 
-      const survivors = this.game.endQuiz()
+      const rank = this.game.endQuiz()
       this.broadCastMessage('quiz', {
         state: this.game.state,
-        survivors
+        rank
       })
       await utils.sleep(2000)
 

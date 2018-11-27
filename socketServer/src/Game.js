@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const GAMESTATE = {
   READY: 0,
   START_QUIZ: 1,
@@ -6,8 +7,13 @@ const GAMESTATE = {
   READY_NEXT_QUIZ_COUNT: 4,
   TOTAL_RESULT: 6
 }
+const RANK_SIZE = 10
 
 class Game {
+  static get GAMESTATE() {
+    return GAMESTATE
+  }
+
   // TODO(wonjerry): Delete default parameter when api server sonnected.
   constructor(
     quizzes = [
@@ -27,10 +33,6 @@ class Game {
     this.players = new Map()
   }
 
-  static get GAMESTATE() {
-    return GAMESTATE
-  }
-
   startQuiz(clients) {
     console.log(`Start Quiz: ${this.process.current}`)
     this.state = GAMESTATE.START_QUIZ
@@ -39,7 +41,7 @@ class Game {
       this.players.set(id, {
         isCorrect: false,
         answers: [],
-        life: 1,
+        correctNum: 0,
         nickname: client.nickname
       })
     })
@@ -53,7 +55,7 @@ class Game {
   endQuiz() {
     console.log('End Quiz')
     this.state = GAMESTATE.START_END
-    return this.getSurvivors()
+    return this.calculateRank()
   }
 
   readyNextQuiz() {
@@ -64,25 +66,20 @@ class Game {
   finishGame() {
     console.log('Finish Game')
     this.state = GAMESTATE.TOTAL_RESULT
-    return this.getSurvivors()
+    return this.calculateRank()
   }
 
   isFinish() {
     return this.process.current > this.process.total
   }
 
-  // TODO(wonjerry): Check users can change their answer.
+  // TODO(wonjerry): Implement enable modify answer later.
   setAnswer(id, answer) {
     if (!this.players.has(id)) {
       return
     }
 
     const player = this.players.get(id)
-    if (player.life < 0) {
-      return
-    }
-
-    // TODO(wonjerry): Implement modify answer later.
     if (player.answers[this.process.current - 1]) {
       return
     }
@@ -91,17 +88,21 @@ class Game {
     player.isCorrect = answer == this.quizzes[this.process.current - 1].answer
   }
 
-  getSurvivors() {
-    const survivors = []
+  calculateRank() {
     this.players.forEach((player, _) => {
       if (player.isCorrect) {
-        survivors.push(player.nickname)
-      } else {
-        player.life--
+        this.players.correctNum++
       }
       player.isCorrect = false
     })
-    return survivors
+
+    return [...this.player.entries()]
+      .sort((a, b) => b[1].correctNum - a[1].correctNum)
+      .slice(0, RANK_SIZE)
+      .map(entry => ({
+        nickname: entry[0].nickname,
+        correctNum: entry[0].correctNum
+      }))
   }
 }
 
