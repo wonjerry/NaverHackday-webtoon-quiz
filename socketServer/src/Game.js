@@ -5,7 +5,7 @@ const GAMESTATE = {
   READY_ANSWER_COUNT: 2,
   END_QUIZ: 3,
   READY_NEXT_QUIZ_COUNT: 4,
-  TOTAL_RESULT: 6
+  TOTAL_RESULT: 5
 }
 const RANK_SIZE = 10
 
@@ -14,7 +14,7 @@ class Game {
     return GAMESTATE
   }
 
-  // TODO(wonjerry): Delete default parameter when api server sonnected.
+  // TODO(wonjerry): Delete default parameter when api server connected.
   constructor(
     quizzes = [
       { answer: 1 },
