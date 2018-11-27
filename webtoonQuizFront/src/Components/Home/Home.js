@@ -107,9 +107,16 @@ class Home extends Component {
                     
                 else{
                     return (
-                        <div>   
+                        <div className="Home">   
                             <Container>
-                    
+                              
+                                <p className="HOME-WEBTOON-LIVE-LOGO">
+                                <p className="HOME-WEBTOON-text">대국민 라이브 퀴즈쇼</p>
+                                    WEBTOON
+                                    <p className="HOME-text-style-1">LIVE</p>                                   
+                                </p>
+                                <p className="HOME-WEBTOON-text1">와 함께하는 실시간 퀴즈쇼에 참여하시고 엄청난 상금의 주인공이 되세요!</p>
+                             
                                {button}              
                                     <br/>
                                 <div>환영합니다 {this.state.nickname}님</div>

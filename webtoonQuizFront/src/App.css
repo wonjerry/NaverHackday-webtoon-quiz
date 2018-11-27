@@ -1,0 +1,32 @@
+.WEBTOON-LIVE-LOGO {
+    width: 119px;
+    height: 79px;
+    font-family: Evogria;
+    font-size: 27.5px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2.02;
+    letter-spacing: -0.2px;
+    text-align: left;
+    color: #1cc700;
+    top: -2%;
+    position: fixed;
+    left: 3%;
+  }
+  .WEBTOON-LIVE-LOGO-text {
+    font-size: 64px;
+    letter-spacing: 2.6px;
+  }
+  .text-style-1{
+    font-size: 64px;
+    letter-spacing: 2.6px;
+    margin-top: -50px;
+    position: fixed;
+
+  }
+  
+  body{
+    background: black;
+  }
+  

@@ -38,3 +38,58 @@ time{
     text-align: left;
     color: #43b649;
 }
+.HOME-WEBTOON-LIVE-LOGO{
+    margin-top: 10%;
+    width: 340px;
+    height: 225px;
+    font-family: Evogria;
+    font-size: 79.5px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2;
+    letter-spacing: -0.6px;
+    text-align: left;
+    color: var(--vibrant-green);
+    margin-left: -34px;
+    color: #1cc700;
+    margin-bottom: 200px;
+}
+.HOME-text-style-1{
+    margin-top: -130px;
+    font-size: 183.5px;
+    letter-spacing: 7.3px;
+}
+
+.HOME-WEBTOON-text{
+    width: 337px;
+    opacity: 0.8;
+    font-family: NanumGothic;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: -0.3px;
+    text-align: center;
+    color: rgba(67, 182, 73, 0.8);
+    font-size: 35.5px;
+    font-weight: bold;
+    line-height: 1.37;
+    letter-spacing: -0.3px;
+    margin-bottom: -24px;
+}
+.HOME-WEBTOON-text1{
+    width: 337px;
+    margin-top: -60px;
+    opacity: 0.8;
+    font-family: NanumGothic;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: -0.3px;
+    text-align: center;
+    color: rgba(67, 182, 73, 0.8);
+}

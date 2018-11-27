@@ -14,6 +14,7 @@ const Container = styled.div`
   text-align: center;
 `;
 
+
 const client_id = 'JnMzxgYF8MGJLzpxmSmh';
 const redirectURI = encodeURI("http://localhost:3000/Home");
 
@@ -78,7 +79,7 @@ class Login extends Component {
             return (
                 <div>
                     <Container>  
-              
+                   
                         {button}      
                         <br/>
                         <div id="naver_id_login" className="naverLogin"></div>

@@ -4,7 +4,6 @@ import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 import './Score.css'
 import Chat from './Chat/Chat';
-import Clock from 'react-live-clock';
 import WinnerList from './WinnerList/WinnerList.js';
 import SockJsClient from 'react-stomp';
 import {chatURL} from '../socketURL'
@@ -77,21 +76,23 @@ class Score extends React.Component {
       
     render() {
        
-            progress1 = (<div>
-                <p className="scoreText"> <strong>정답</strong>   2. {this.state.quizName[1]}  </p>
-                <p> {this.state.answerCount[1]} 명</p> 
-            </div>
+            progress1 = (
+                <div className="scoreProgress">
+                    <p className="scoreText"> <strong>정답</strong>   2. {this.state.quizName[1]}   </p>
+                    <p> {this.state.answerCount[1]} 명</p> 
+                </div>
             );
-            progress2 = (  <div>
-                <p className="scoreText">1. {this.state.quizName[0]}</p> 
-                <p> {this.state.answerCount[0]} 명</p> 
-            </div>
+            progress2 = (  
+                <div className="scoreProgress">
+                    <p className="scoreText">1. {this.state.quizName[0]}</p> 
+                    <p> {this.state.answerCount[0]} 명</p> 
+                </div>
             );
             progress3 =  ( 
-            <div>
-                <p className="scoreText">3. {this.state.quizName[2]}</p> 
-                <p> {this.state.answerCount[2]} 명</p> 
-            </div>
+                <div className="scoreProgress">
+                    <p className="scoreText">3. {this.state.quizName[2]}</p> 
+                    <p> {this.state.answerCount[2]} 명</p> 
+                </div>
             );
         
 
