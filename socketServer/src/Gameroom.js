@@ -1,5 +1,4 @@
 const axios = require('axios')
-const moment = require('moment')
 
 const Game = require('./Game')
 const Timer = require('./Timer')
@@ -101,10 +100,10 @@ class Gameroom {
       await this.startCountDown(SHOW_RESULT_TIME)
     }
 
-    const survivors = this.game.finishGame()
+    const rank = this.game.finishGame()
     this.broadCastMessage('quiz', {
       state: this.game.state,
-      survivors
+      rank
     })
   }
 

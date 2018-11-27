@@ -1,15 +1,15 @@
 # Socket server for webtoon quiz.
 
 ## Requirements
-- Install nodejs(9.11.2), npm(5.6.0)
+- Install nodejs(9.11.2), npm(5.6.0), yarn
 - Install dependency
 
 ```bash
-  npm install
+  yarn
 ```
 
 ## Run
 
 ```bash
-  npm start
+  yarn start
 ```
