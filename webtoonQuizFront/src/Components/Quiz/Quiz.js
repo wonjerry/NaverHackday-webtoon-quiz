@@ -140,9 +140,7 @@ class Quiz extends React.Component {
         return (
           
             <Container>
-           
-              <Line strokeWidth="2" trailWidth="2" percent={this.state.time} strokeLinecap="square" trailColor="rgba(255,255,255,0.05)" />
-                
+          
                 <Question>
                 {/* <span className="quizNumber">문제{this.state.quizNumber}</span> */}
                     <p className="questionName"> <b>{this.state.question}</b></p>
@@ -177,6 +175,9 @@ class Quiz extends React.Component {
                   </div>
                 </label>
               </div>
+              
+               <Line strokeWidth="2" trailWidth="2" percent={this.state.time} strokeLinecap="square" trailColor="rgba(255,255,255,0.05)" />
+                
             </Container>
 
         );}

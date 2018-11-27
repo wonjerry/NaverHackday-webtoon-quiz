@@ -7,3 +7,34 @@
 #paper{
     width: 440px;
 }
+
+.naverLogin img {
+    width: 200px;
+}
+.navText{
+    width: 120px;
+    height: 20px;
+    opacity: 0.8;
+    font-family: NanumGothic;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2.43;
+    letter-spacing: -0.2px;
+    text-align: center;
+    color: rgba(67, 182, 73, 0.8);
+}
+time{
+    width: 411px;
+    height: 81px;
+    font-family: Evogria;
+    font-size: 97.5px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2;
+    letter-spacing: -0.8px;
+    text-align: left;
+    color: #43b649;
+}

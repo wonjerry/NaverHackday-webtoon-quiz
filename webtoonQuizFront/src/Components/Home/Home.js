@@ -88,7 +88,7 @@ class Home extends Component {
                 button=(
                    <section className="portfolio-experiment" onClick={()=>{this.setState({quizOpen : true})}}>
                         <a className="quiz_a">
-                            <span className="text">웹툰 퀴즈 참여하기</span>
+                            <span className="text">GAME START</span>
                             <span className="line -right"></span>
                             <span className="line -top"></span>
                             <span className="line -left"></span>
@@ -110,8 +110,7 @@ class Home extends Component {
                         <div>   
                             <Container>
                     
-                                <Clock format={'HH:mm:ss'} ticking={true} timezone={'Asia/Seoul'} />
-                                    {button}              
+                               {button}              
                                     <br/>
                                 <div>환영합니다 {this.state.nickname}님</div>
                             </Container>

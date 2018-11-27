@@ -23,6 +23,12 @@ $color : #69d83d;
       transform: translate3d(0,$pad,0);
       display: block;
       transition: transform 0.4s cubic-bezier(.2,0,0,1) 0.4s;
+      opacity: 0.8;
+      font-family: Evogria;
+      font-size: 36.5px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
     }
 
     &:after {
