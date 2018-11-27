@@ -4,7 +4,6 @@ import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 import './Score.css'
 import Chat from './Chat/Chat';
-import Clock from 'react-live-clock';
 import WinnerList from './WinnerList/WinnerList.js';
 import SockJsClient from 'react-stomp';
 import {chatURL} from '../socketURL'
@@ -18,9 +17,9 @@ const Container = styled.div`
   width:100%;
 `;
 
-let progress1
-let progress2
-let progress3
+let progress1=""
+let progress2=""
+let progress3=""
 
 class Score extends React.Component {
     
@@ -76,22 +75,26 @@ class Score extends React.Component {
 
       
     render() {
-        progress1 = (<div>
-            <p className="scoreText"> <strong>정답</strong>   2. {this.state.quizName[1]}  </p>
-            <p> {this.state.answerCount[1]} 명</p> 
-        </div>
-        );
-        progress2 = (  <div>
-            <p className="scoreText">1. {this.state.quizName[0]}</p> 
-            <p> {this.state.answerCount[0]} 명</p> 
-        </div>
-        );
-        progress3 =  ( 
-        <div>
-            <p className="scoreText">3. {this.state.quizName[2]}</p> 
-            <p> {this.state.answerCount[2]} 명</p> 
-         </div>
-        );
+       
+            progress1 = (
+                <div className="scoreProgress">
+                    <p className="scoreText"> <strong>정답</strong>   2. {this.state.quizName[1]}   </p>
+                    <p> {this.state.answerCount[1]} 명</p> 
+                </div>
+            );
+            progress2 = (  
+                <div className="scoreProgress">
+                    <p className="scoreText">1. {this.state.quizName[0]}</p> 
+                    <p> {this.state.answerCount[0]} 명</p> 
+                </div>
+            );
+            progress3 =  ( 
+                <div className="scoreProgress">
+                    <p className="scoreText">3. {this.state.quizName[2]}</p> 
+                    <p> {this.state.answerCount[2]} 명</p> 
+                </div>
+            );
+        
 
       if(this.state.connect){
           return(
@@ -113,7 +116,7 @@ class Score extends React.Component {
                 ref={ (client) => { this.clientRef = client }} />
 
             <h2>{this.state.question}</h2> 
-             <p className="explain"> 퀴즈 제출 시간은 5초 입니다. 내가 제출한 답 {this.state.answer+1}</p>
+             <p className="explain"> 퀴즈 제출 시간은 5초 입니다. 내가 제출한 답 <strong>{this.state.answer+1}</strong></p>
              <p className="explain" > 현재 {this.state.totalUser}명이 참가중입니다.</p>
              <h2 className="animated infinite slideInUp delay-1s">{this.state.time}</h2>
         <br/>
@@ -158,7 +161,7 @@ class Score extends React.Component {
                         ref={ (client) => { this.clientRef = client }} />
 
                     <h2>{this.state.question}</h2> 
-                     <p className="explain"> 퀴즈 제출 시간은 5초 입니다.</p>
+                    <p className="explain"> 퀴즈 제출 시간은 5초 입니다. 내가 제출한 답 <strong>{this.state.answer+1}</strong></p>
                      <p className="explain" > 현재 {this.state.totalUser}명이 참가중입니다.</p>
                     
                      <h2 className="animated infinite slideInUp delay-1s">{this.state.time}</h2>

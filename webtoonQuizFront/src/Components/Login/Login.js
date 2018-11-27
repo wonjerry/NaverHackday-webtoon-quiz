@@ -14,6 +14,7 @@ const Container = styled.div`
   text-align: center;
 `;
 
+
 const client_id = 'JnMzxgYF8MGJLzpxmSmh';
 const redirectURI = encodeURI("http://localhost:3000/Home");
 
@@ -58,18 +59,9 @@ class Login extends Component {
             )
         }
         else{
-            let button =    ( <Paper elevation={2} id='paper'>
-                                <Typography variant="h5" component="h3">
-                                대기중입니다.
-                                </Typography>
-                                <Typography component="p">
-                                    퀴즈 시작 시간은 {this.state.startTimeHour}시 {this.state.startTimeMin}분 입니다.
-                                </Typography>
-                                <Typography component="p">
-                                    로그인 후 게임을 시작할 수 있습니다. 
-                                </Typography>
-                        
-                            </Paper>);
+            let button =    ( <div><p className="navText">대기 시간</p>
+                     <Clock format={'HH:mm:ss'} ticking={true} timezone={'Asia/Seoul'} />
+            </div>);
        
             if(this.state.open){
                 button=(
@@ -87,11 +79,10 @@ class Login extends Component {
             return (
                 <div>
                     <Container>  
-                    <Clock format={'HH:mm:ss'} ticking={true} timezone={'Asia/Seoul'} />
+                   
                         {button}      
-
                         <br/>
-                        <div id="naver_id_login"></div>
+                        <div id="naver_id_login" className="naverLogin"></div>
                     </Container>
                 </div>
             );

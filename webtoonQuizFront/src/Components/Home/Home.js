@@ -88,7 +88,7 @@ class Home extends Component {
                 button=(
                    <section className="portfolio-experiment" onClick={()=>{this.setState({quizOpen : true})}}>
                         <a className="quiz_a">
-                            <span className="text">웹툰 퀴즈 참여하기</span>
+                            <span className="text">GAME START</span>
                             <span className="line -right"></span>
                             <span className="line -top"></span>
                             <span className="line -left"></span>
@@ -107,11 +107,17 @@ class Home extends Component {
                     
                 else{
                     return (
-                        <div>   
+                        <div className="Home">   
                             <Container>
-                    
-                                <Clock format={'HH:mm:ss'} ticking={true} timezone={'Asia/Seoul'} />
-                                    {button}              
+                              
+                                <p className="HOME-WEBTOON-LIVE-LOGO">
+                                <p className="HOME-WEBTOON-text">대국민 라이브 퀴즈쇼</p>
+                                    WEBTOON
+                                    <p className="HOME-text-style-1">LIVE</p>                                   
+                                </p>
+                                <p className="HOME-WEBTOON-text1">와 함께하는 실시간 퀴즈쇼에 참여하시고 엄청난 상금의 주인공이 되세요!</p>
+                             
+                               {button}              
                                     <br/>
                                 <div>환영합니다 {this.state.nickname}님</div>
                             </Container>

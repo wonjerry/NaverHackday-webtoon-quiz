@@ -15,3 +15,6 @@
   .quizImg{
     z-index: -3;
   }
+  .rc-progress-line {
+    margin-bottom: 2%;
+  }
