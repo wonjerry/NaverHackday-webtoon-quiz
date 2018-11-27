@@ -11,7 +11,7 @@ import com.webtoonquiz.model.Quiz;
 public interface QuizRepository extends CrudRepository<Quiz, Long>{
 
 	List<Quiz> findByRoundAndNum(int round, int num);
-	
-	@Query("SELECT Q FROM Quiz Q WHERE round=:round and num=:num and now() > showtime")
+
+	@Query("SELECT Q FROM Quiz Q WHERE round=:round and num=:num")
 	List<Quiz> findByRoundAndNumSQL(@Param("round") int round, @Param("num") int num);
 }

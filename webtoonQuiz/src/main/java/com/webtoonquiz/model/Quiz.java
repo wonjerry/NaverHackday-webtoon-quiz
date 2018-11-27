@@ -4,21 +4,22 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Entity
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="type")
 public class Quiz implements Serializable {
 
 	private static final long serialVersionUID = 5474167520502610293L;
@@ -29,37 +30,18 @@ public class Quiz implements Serializable {
 	private Long id;
 	
 	@Column(name="round")
-	private int round;
+	protected int round;
 	
 	@Column(name="num")
-	private int num;
+	protected int num;
+	
+	@Column(name="type")
+	protected String type;
 	
 	@Column(name="description")
-	private String description;
-	
-	@Column(name="option_one")
-	private String option_one;
-	
-	@Column(name="option_two")
-	private String option_two;
-	
-	@Column(name="option_three")
-	private String option_three;
-	
-	@Column(name="option_four")
-	private String option_four;
+	protected String description;
 	
 	@Column(name="showtime")
 	private Timestamp showTime;
-
-	public Quiz(int num, String description, String option_one, String option_two, String option_three, String option_four) {
-		super();
-		this.num = num;
-		this.description = description;
-		this.option_one = option_one;
-		this.option_two = option_two;
-		this.option_three = option_three;
-		this.option_four = option_four;
-	}
 	
 }
