@@ -7,7 +7,6 @@ const GAMESTATE = {
   READY_NEXT_QUIZ_COUNT: 4,
   TOTAL_RESULT: 5
 }
-const RANK_SIZE = 10
 
 class Game {
   static get GAMESTATE() {
@@ -39,10 +38,9 @@ class Game {
 
     clients.forEach((client, id) => {
       this.players.set(id, {
-        isCorrect: false,
         answers: [],
-        correctNum: 0,
-        nickname: client.nickname
+        nickname: client.nickname,
+        isSurvivor: true
       })
     })
   }
@@ -55,7 +53,7 @@ class Game {
   endQuiz() {
     console.log('End Quiz')
     this.state = GAMESTATE.START_END
-    return this.calculateRank()
+    return this.calculateResult()
   }
 
   readyNextQuiz() {
@@ -66,7 +64,7 @@ class Game {
   finishGame() {
     console.log('Finish Game')
     this.state = GAMESTATE.TOTAL_RESULT
-    return this.calculateRank()
+    return this.calculateResult()
   }
 
   isFinish() {
@@ -85,24 +83,31 @@ class Game {
     }
 
     player.answers.push(answer)
-    player.isCorrect = answer == this.quizzes[this.process.current - 1].answer
   }
 
-  calculateRank() {
-    this.players.forEach((player, _) => {
-      if (player.isCorrect) {
-        this.players.correctNum++
+  calculateResult() {
+    const correctAnswer = this.quizzes[this.process.current - 1].answer
+    this.player.forEach((_, player) => {
+      if (player.answers[this.process.current - 1] != correctAnswer) {
+        player.isSurvivor = false
       }
-      player.isCorrect = false
     })
+    return {
+      survivors: this.getSurvivors(),
+      answerStatics: this.getAnswerStatics()
+    }
+  }
 
+  getSurvivors() {
     return [...this.player.entries()]
-      .sort((a, b) => b[1].correctNum - a[1].correctNum)
-      .slice(0, RANK_SIZE)
-      .map(entry => ({
-        nickname: entry[0].nickname,
-        correctNum: entry[0].correctNum
-      }))
+      .filter(([_, player]) => player.isSurvivor)
+      .map(([_, player]) => player.nickname)
+  }
+
+  getAnswerStatics() {
+    return [...this.player.entries()].map(
+      ([_, player]) => player.isSurvivor && player.answers[this.process.current - 1]
+    )
   }
 }
 
