@@ -58,4 +58,12 @@ public class QuizTest {
       quizRepository.save(testOptionQuiz);
   }
 
+  @Test
+  public void findAllRoundIdQuizTest(){
+    System.out.println(quizRepository.findAllByRoundIdOrderById(1));
+    System.out.println(quizRepository.findAllByRoundIdOrderById(2));
+    System.out.println(quizRepository.findAll());
+
+  }
+
 }

@@ -24,6 +24,10 @@ public class QuizService {
 		return quizRepository.findAll();
 	}
 
+  public List<Quiz> getRoundIdAllQuizzes(int roundId) {
+    return quizRepository.findAllByRoundIdOrderById(roundId);
+  }
+
   @Transactional
 	public ResponseEntity<String> CreateOxQuiz(final OxQuiz oxQuiz){
     quizRepository.save(oxQuiz);

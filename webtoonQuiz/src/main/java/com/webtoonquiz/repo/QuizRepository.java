@@ -10,4 +10,6 @@ import com.webtoonquiz.model.Quiz;
 
 public interface QuizRepository extends JpaRepository<Quiz, Long>{
 
+  List<Quiz> findAllByRoundIdOrderById(int roundId);
+
 }

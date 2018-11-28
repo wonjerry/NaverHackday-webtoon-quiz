@@ -62,9 +62,15 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
 
 
-	</dependencies>
+
+
+</dependencies>
 
 	<build>
 		<plugins>

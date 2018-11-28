@@ -1,10 +1,12 @@
 package com.webtoonquiz.model;
 import lombok.Data;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "Round")
 public class Round {
 
   @Id

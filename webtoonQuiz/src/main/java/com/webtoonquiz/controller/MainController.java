@@ -3,10 +3,12 @@ package com.webtoonquiz.controller;
 import com.webtoonquiz.model.OptionQuiz;
 import com.webtoonquiz.model.OxQuiz;
 import com.webtoonquiz.model.Quiz;
+import com.webtoonquiz.model.Round;
 import com.webtoonquiz.repo.OxQuizRepository;
 import com.webtoonquiz.service.OptionQuizService;
 import com.webtoonquiz.service.OxQuizService;
 import com.webtoonquiz.service.QuizService;
+import com.webtoonquiz.service.RoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,8 @@ public class MainController {
     OptionQuizService optionQuizService;
     @Autowired
     QuizService quizService;
+    @Autowired
+  RoundService roundService;
 
     @GetMapping("/oxQuizzes")
     public List<OxQuiz> oxQuizzes() {
@@ -37,6 +41,16 @@ public class MainController {
     public List<Quiz> quizzes() {
         return quizService.getAllQuizzes();
     }
+
+  @GetMapping("/quizzes/{roundId}")
+  public List<Quiz> roundIdAllQuizzes(@PathVariable int roundId) {
+    return quizService.getRoundIdAllQuizzes(roundId);
+  }
+
+  @GetMapping("/rounds")
+  public List<Round> rounds() {
+    return roundService.getRounds();
+  }
 
   @PostMapping("/optionQuiz")
   public ResponseEntity<String> createOptionQuiz(@RequestBody OptionQuiz optionQuiz) {
