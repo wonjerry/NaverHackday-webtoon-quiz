@@ -23,12 +23,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// Authorization : Role -> Access
 	protected void configure(HttpSecurity http) throws Exception {
-		http.httpBasic().and().authorizeRequests()
+		http.httpBasic().and()./*authorizeRequests()
 		//.antMatchers(HttpMethod.GET,"/api/**").hasRole("USER")
 		.antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
 		.antMatchers(HttpMethod.POST).hasRole("ADMIN")
 		.antMatchers(HttpMethod.PUT).hasRole("ADMIN")
-		.and().csrf().disable().headers().frameOptions().disable();
+		.and().*/csrf().disable().headers().frameOptions().disable();
 	}
 
 	private PasswordEncoder getPasswordEncoder() {
