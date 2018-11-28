@@ -1,19 +1,37 @@
-#root{
-        width:100%;
+#root {
+  width: 100%;
+}
+.quizCreate {
+  margin-left: 465px;
+}
+.quiz_a {
+  width: 300px;
+}
+.home {
+  margin-top: -200px;
+}
+.start-button {
+  margin-top: 174px;
 }
 
-.quizCreate{
-    margin-left: 465px;
+.webtoon-live-text-top {
+  width: 337px;
+  opacity: 0.8;
+  font-family: NanumGothic;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: rgba(67, 182, 73, 0.8);
 }
-.quiz_a{
-    width: 300px;
 
-}
-.Home{
-    margin-top: -200px;
-    
-}
-
-.portfolio-experiment{
-    margin-top: 5%;
+.webtoon-live-text-bottom {
+  width: 337px;
+  opacity: 0.8;
+  font-family: NanumGothic;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: rgba(67, 182, 73, 0.8);
 }

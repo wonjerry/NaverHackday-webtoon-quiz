@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
-import Quiz from '../Quiz/Quiz'
 
+import Quiz from '../Quiz/Quiz'
+import logo from '../../img/logo.svg'
+import { actionCreators } from '../../state/actions/home'
 import { getNaverLoginInfo } from '../../utils'
 
 import './Button.scss'
@@ -25,7 +27,6 @@ class Home extends Component {
     super(props)
     this.state = {
       hasError: false,
-      nickname: '',
       question: '',
       buttonOpen: false,
       quizOpen: false
@@ -54,9 +55,8 @@ class Home extends Component {
   naverSignInCallback() {
     const naverLogin = new window.naver_id_login(CLIENT_ID, REDIRECT_URI)
     // TODO(wonjerry): Get from redux store.
-    this.setState({
-      nickname: naverLogin.getProfileData('nickname')
-    })
+    const nickname = naverLogin.getProfileData('nickname')
+    this.props.setNickname(nickname)
   }
 
   // TODO(wonjerry): Convert to moment.
@@ -102,7 +102,8 @@ class Home extends Component {
   }
 
   render() {
-    const { hasError, quizOpen, nickname, question } = this.state
+    const { hasError, quizOpen, question } = this.state
+    const { nickname } = this.props
     if (hasError) {
       return <div>Home화면이 에러가 났어요. 관리자에게 문의 바랍니다.</div>
     }
@@ -116,19 +117,20 @@ class Home extends Component {
     }
 
     return (
-      <div className="Home">
+      <div className="home">
         <Container>
-          <p className="HOME-WEBTOON-LIVE-LOGO">
-            <p className="HOME-WEBTOON-text">대국민 라이브 퀴즈쇼</p>
-            WEBTOON
-            <p className="HOME-text-style-1">LIVE</p>
-          </p>
-          <p className="HOME-WEBTOON-text1">
+          
+          <div className="webtoon-live-text-top">대국민 라이브 퀴즈쇼</div>
+          <div className="webtoon-live-logo">
+            <img src={logo} alt=''/>
+          </div>
+          <div className="webtoon-live-text-bottom">
             와 함께하는 실시간 퀴즈쇼에 참여하시고 엄청난 상금의 주인공이
             되세요!
-          </p>
-          {this.getStartButton()}
-          <br />
+          </div>
+          <div className="start-button">
+            {this.getStartButton()}
+          </div>
           <div>환영합니다 {nickname}님</div>
         </Container>
       </div>
@@ -140,4 +142,8 @@ const mapStateToProps = (state) => ({
   nickname: state.home.nickname
 })
 
-export default connect(mapStateToProps, null)(Home)
+const mapDispatchToProps = {
+  setNickname: actionCreators.setNickname
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
