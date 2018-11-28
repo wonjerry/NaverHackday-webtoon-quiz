@@ -113,6 +113,7 @@ class Home extends Component {
           <div className="line-first">와 함께하는 실시간 퀴즈쇼에 참여하시고</div>
           <div className="line-second">엄청난 상금의 주인공이 되세요!</div>
         </div>
+        <div className="start-time-text">내일 낮 12:30</div>
         <div className="start-button">{this.getStartButton()}</div>
         <div>환영합니다 {this.props.nickname}님</div>
       </Container>

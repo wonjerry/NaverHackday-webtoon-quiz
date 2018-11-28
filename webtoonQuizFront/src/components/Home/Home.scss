@@ -1,17 +1,8 @@
+$color: #4BC14F;
+
 
 .quizCreate {
   margin-left: 465px;
-}
-.quiz_a {
-  width: 367px;
-}
-
-.home {
-  margin-top: -200px;
-}
-.start-button {
-  margin-top: 174px;
-  width: 367px;
 }
 
 .webtoon-live-text-top {
@@ -23,7 +14,7 @@
   line-height: 1.8;
   letter-spacing: -0.3px;
   text-align: center;
-  color: #4BC14F;
+  color: $color;
 }
 
 .webtoon-live-logo {
@@ -41,6 +32,22 @@
   line-height: 1.4;
   letter-spacing: -0.3px;
   text-align: center;
-  color: #4BC14F;
+  color: $color;
   margin-top: 17px;
+}
+
+.start-time-text {
+  position: relative;
+  top: 145px;
+  color: $color;
+  font-size: 20px;
+}
+
+.start-button {
+  margin-top: 174px;
+  width: 367px;
+}
+
+.quiz_a {
+  width: 367px;
 }

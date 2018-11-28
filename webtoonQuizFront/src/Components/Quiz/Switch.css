@@ -1,20 +1,20 @@
-.Switch-inner{
-    z-index: -1;
-  }
-  .Switch{
-    margin-bottom: 5%;
-  }
-  .quizText{
-    margin-bottom: -13%;
-    font-size : 2em;
-  }
-  .quizNumber{
-    font-size: 0.7em;
-    margin-bottom: 3%;
-  }
-  .quizImg{
-    z-index: -3;
-  }
-  .rc-progress-line {
-    margin-bottom: 2%;
-  }
+.Switch-inner {
+  z-index: -1;
+}
+.Switch {
+  margin-bottom: 5%;
+}
+.quizText {
+  margin-bottom: -13%;
+  font-size: 2em;
+}
+.quizNumber {
+  font-size: 0.7em;
+  margin-bottom: 3%;
+}
+.quizImg {
+  z-index: -3;
+}
+.rc-progress-line {
+  margin-bottom: 2%;
+}
