@@ -7,7 +7,7 @@ import anonymous from '../../img/anonymous.svg'
 import { getNaverLoginInfo } from '../../utils'
 
 import './Button.scss'
-import './Login.css'
+import './Login.scss'
 
 const Container = styled.div`
   display: flex;
@@ -51,16 +51,16 @@ class Login extends Component {
     return (
       <div>
         <Container>
-          <div>
+          <div className="globe-container">
             <img src={globe} alt="" />
           </div>
-          <div>
+          <div className="logo-container">
             <img src={logo} alt="" />
           </div>
-          <div>
+          <div className="anonymous-container">
             <img className="ananymous" src={anonymous} alt="" />
           </div>
-          <div id="naver_id_login" className="naverLogin" />
+          <div id="naver_id_login" className="naver-login" />
         </Container>
       </div>
     )

@@ -27,9 +27,7 @@ class Home extends Component {
     super(props)
     this.state = {
       hasError: false,
-      question: '',
       buttonOpen: false,
-      quizOpen: false
     }
     window.naverSignInCallback = this.naverSignInCallback.bind(this)
   }

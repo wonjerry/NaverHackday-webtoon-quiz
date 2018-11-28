@@ -5,7 +5,6 @@ import Home from './components/Home'
 import Quiz from './components/Quiz'
 import Result from './components/Result'
 
-
 import './App.css'
 
 class App extends Component {
