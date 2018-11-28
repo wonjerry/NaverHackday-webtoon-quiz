@@ -1,3 +1,8 @@
+@font-face {
+  font-family:'Evogria';
+  src: url('../../font/Evogria.otf');
+}
+
 $thick: 3px;
 $pad: 0.7em;
 $extra: calc(#{$pad} * 1.2);
@@ -7,7 +12,7 @@ $color: #69d83d;
   background: #2d2d2d;
 
   a {
-    color: white;
+    color: $color;
     padding: $pad $extra;
     display: inline-block;
     border: $thick solid transparent;

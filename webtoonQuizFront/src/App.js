@@ -12,9 +12,6 @@ class App extends Component {
     return (
       <Router>
         <div className="body">
-          <p className="WEBTOON-LIVE-LOGO">WEBTOON</p>
-          <p className="text-style-1">LIVE</p>
-
           <Route exact path="/" component={Login} />
           <Route exact path="/Home" component={Home} />
           <Route exact path="/Quiz" component={Quiz} />
