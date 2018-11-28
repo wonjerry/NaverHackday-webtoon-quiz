@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
 
-import Quiz from '../Quiz/Quiz'
+import Quiz from '../Quiz'
 import logo from '../../img/logo.svg'
 import { actionCreators } from '../../state/actions/home'
 import { getNaverLoginInfo } from '../../utils'
@@ -74,11 +74,11 @@ class Home extends Component {
 
   getStartButton() {
     // TODO(wonjerry): Get start time from REST server.
-    return this.state.buttonOpen ? (
+    return !this.state.buttonOpen ? (
       <section
         className="portfolio-experiment"
         onClick={() => {
-          this.setState({ quizOpen: true })
+          this.props.history.push('/Quiz')
         }}
       >
         <a className="quiz_a">
@@ -102,43 +102,30 @@ class Home extends Component {
   }
 
   render() {
-    const { hasError, quizOpen, question } = this.state
-    const { nickname } = this.props
-    if (hasError) {
+    if (this.state.hasError) {
       return <div>Home화면이 에러가 났어요. 관리자에게 문의 바랍니다.</div>
-    }
-
-    if (quizOpen) {
-      return (
-        <div>
-          <Quiz nickname={nickname} question={question} props={this.props} />
-        </div>
-      )
     }
 
     return (
       <div className="home">
         <Container>
-          
           <div className="webtoon-live-text-top">대국민 라이브 퀴즈쇼</div>
           <div className="webtoon-live-logo">
-            <img src={logo} alt=''/>
+            <img src={logo} alt="" />
           </div>
           <div className="webtoon-live-text-bottom">
             와 함께하는 실시간 퀴즈쇼에 참여하시고 엄청난 상금의 주인공이
             되세요!
           </div>
-          <div className="start-button">
-            {this.getStartButton()}
-          </div>
-          <div>환영합니다 {nickname}님</div>
+          <div className="start-button">{this.getStartButton()}</div>
+          <div>환영합니다 {this.props.nickname}님</div>
         </Container>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   nickname: state.home.nickname
 })
 
@@ -146,4 +133,7 @@ const mapDispatchToProps = {
   setNickname: actionCreators.setNickname
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home)
