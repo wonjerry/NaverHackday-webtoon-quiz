@@ -8,8 +8,8 @@ import com.webtoonquiz.service.OptionQuizService;
 import com.webtoonquiz.service.OxQuizService;
 import com.webtoonquiz.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,18 +24,30 @@ public class MainController {
     @Autowired
     QuizService quizService;
 
-    @RequestMapping("/oxQuiz")
-    public List<OxQuiz> oxQuizs() {
-        return oxQuizService.getOxQuizs();
+    @GetMapping("/oxQuizzes")
+    public List<OxQuiz> oxQuizzes() {
+        return oxQuizService.getOxQuizzes();
     }
 
-    @RequestMapping("/optionQuiz")
-    public List<OptionQuiz> optionQuizs() {
-        return optionQuizService.getOptionQuizs();}
+    @GetMapping("/optionQuizzes")
+    public List<OptionQuiz> optionQuizzes() {
+        return optionQuizService.getOptionQuizzes();}
 
-    @RequestMapping("/quizes")
-    public List<Quiz> quizes() {
-        return quizService.getAllQuizs();
+    @GetMapping("/quizzes")
+    public List<Quiz> quizzes() {
+        return quizService.getAllQuizzes();
     }
+
+  @PostMapping("/optionQuiz")
+  public ResponseEntity<String> createOptionQuiz(@RequestBody OptionQuiz optionQuiz) {
+    return quizService.CreateOptionQuiz(optionQuiz);
+  }
+
+  @PostMapping("/oxQuiz")
+  public ResponseEntity<String> createOxQuiz(@RequestBody OxQuiz oxQuiz) {
+    return quizService.CreateOxQuiz(oxQuiz);
+  }
+
+
 
 }

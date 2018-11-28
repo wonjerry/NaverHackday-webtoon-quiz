@@ -20,10 +20,5 @@ public class QuizController {
 
 	@Autowired
 	private QuizService quizService;
-  @RequestMapping("/find")
-  public List<Quiz> quizes() {
-    return quizService.getAllQuizs();
-  }
-
 	
 }

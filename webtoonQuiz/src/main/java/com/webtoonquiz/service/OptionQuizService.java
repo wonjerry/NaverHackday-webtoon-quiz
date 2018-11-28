@@ -13,7 +13,7 @@ public class OptionQuizService {
     @Autowired
     OptionQuizRepository optionQuizRepository;
 
-    public List<OptionQuiz> getOptionQuizs() {
+    public List<OptionQuiz> getOptionQuizzes() {
         return optionQuizRepository.findAll();
     }
 
