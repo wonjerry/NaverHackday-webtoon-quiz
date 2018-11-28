@@ -14,6 +14,9 @@ import javax.persistence.InheritanceType;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.persistence.Lob;
+import javax.persistence.Basic;
+import javax.persistence.FetchType;
 
 @Data
 @NoArgsConstructor
@@ -26,22 +29,23 @@ public class Quiz implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="quiz_id")
+	@Column(name="id")
 	private Long id;
-	
-	@Column(name="round")
-	protected int round;
-	
-	@Column(name="num")
-	protected int num;
-	
-	@Column(name="type")
-	protected String type;
-	
-	@Column(name="description")
-	protected String description;
-	
-	@Column(name="showtime")
-	private Timestamp showTime;
-	
+
+  @Column(name="title")
+  protected String title;
+
+  @Column(name="description")
+  protected String description;
+
+  @Basic(fetch = FetchType.LAZY)
+  @Lob
+  protected byte[] img;
+
+  @Column(name="type")
+  protected String type;
+
+  @Column(name="roundId")
+  protected int roundId;
+
 }

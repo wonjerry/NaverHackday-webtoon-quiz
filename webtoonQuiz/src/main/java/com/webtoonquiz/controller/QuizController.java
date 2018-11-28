@@ -29,51 +29,55 @@ public class QuizController {
 
 	@Autowired
 	private QuizService quizService;
+  @RequestMapping("/find")
+  public List<Quiz> quizes() {
+    return quizService.getAllQuizs();
+  }
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	@GetMapping(value = "/quizs/{round}/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Quiz>> findByTitle(@PathVariable int round, @PathVariable int num) {
-		logger.debug("Calling findByTitle( )");
-		List<Quiz> quizs = quizService.findByRoundAndNumSQL(round, num);
-
-		return new ResponseEntity<List<Quiz>>(quizs, HttpStatus.OK);
-	}
-	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@GetMapping(value = "/quizs", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Quiz>> getAll() {
-		logger.debug("Calling getAll( )");
-		return new ResponseEntity<List<Quiz>>(quizService.getAllQuizs(), HttpStatus.OK);
-	}
-
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@PostMapping(value = "/quizs")
-	public ResponseEntity<Void> postQuiz(@RequestBody Quiz quiz) {
-		logger.debug("Calling postQuiz( )");
-
-		boolean flag = quizService.addQuiz(quiz);
-        if (flag == false) {
-        	return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        }
-
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
-	}
-	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@PutMapping(value = "/quizs")
-	public ResponseEntity<Quiz> putQuiz(@RequestBody Quiz quiz) {
-		quizService.updateQuiz(quiz);
-		
-		return new ResponseEntity<Quiz>(quiz, HttpStatus.OK);		
-	}
-
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@DeleteMapping(value = "/quizs/{id}")
-	public ResponseEntity<Void> deleteQuiz(@PathVariable long id) {
-		logger.debug("Calling deleteQuiz( )");
-		quizService.deleteQuiz(id);
-		
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-	}
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+//	@GetMapping(value = "/quizs/{round}/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<List<Quiz>> findByTitle(@PathVariable int round, @PathVariable int num) {
+//		logger.debug("Calling findByTitle( )");
+//		List<Quiz> quizs = quizService.findByRoundAndNumSQL(round, num);
+//
+//		return new ResponseEntity<List<Quiz>>(quizs, HttpStatus.OK);
+//	}
+//
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//	@GetMapping(value = "/quizs", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<List<Quiz>> getAll() {
+//		logger.debug("Calling getAll( )");
+//		return new ResponseEntity<List<Quiz>>(quizService.getAllQuizs(), HttpStatus.OK);
+//	}
+//
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//	@PostMapping(value = "/quizs")
+//	public ResponseEntity<Void> postQuiz(@RequestBody Quiz quiz) {
+//		logger.debug("Calling postQuiz( )");
+//
+//		boolean flag = quizService.addQuiz(quiz);
+//        if (flag == false) {
+//        	return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+//        }
+//
+//		return new ResponseEntity<Void>(HttpStatus.CREATED);
+//	}
+//
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//	@PutMapping(value = "/quizs")
+//	public ResponseEntity<Quiz> putQuiz(@RequestBody Quiz quiz) {
+//		quizService.updateQuiz(quiz);
+//
+//		return new ResponseEntity<Quiz>(quiz, HttpStatus.OK);
+//	}
+//
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//	@DeleteMapping(value = "/quizs/{id}")
+//	public ResponseEntity<Void> deleteQuiz(@PathVariable long id) {
+//		logger.debug("Calling deleteQuiz( )");
+//		quizService.deleteQuiz(id);
+//
+//		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+//	}
 	
 }
