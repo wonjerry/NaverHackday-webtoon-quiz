@@ -1,13 +1,12 @@
 const _ = require('lodash')
+
 const GAMESTATE = {
   READY: 0,
-  START_QUIZ: 1,
-  READY_ANSWER_COUNT: 2,
+  WAITING: 1,
+  START_QUIZ: 2,
   END_QUIZ: 3,
-  READY_NEXT_QUIZ_COUNT: 4,
-  TOTAL_RESULT: 5
+  TOTAL_RESULT: 4
 }
-const RANK_SIZE = 10
 
 class Game {
   static get GAMESTATE() {
@@ -17,6 +16,7 @@ class Game {
   // TODO(wonjerry): Delete default parameter when api server connected.
   constructor(
     quizzes = [
+      { answer: 1 },
       { answer: 1 },
       { answer: 1 },
       { answer: 1 },
@@ -33,40 +33,35 @@ class Game {
     this.players = new Map()
   }
 
-  startQuiz(clients) {
-    console.log(`Start Quiz: ${this.process.current}`)
-    this.state = GAMESTATE.START_QUIZ
+  waitClients() {
+    this.state = GAMESTATE.WAITING
+  }
 
+  setPlayers(clients) {
     clients.forEach((client, id) => {
       this.players.set(id, {
-        isCorrect: false,
         answers: [],
-        correctNum: 0,
-        nickname: client.nickname
+        nickname: client.nickname,
+        isSurvivor: true
       })
     })
   }
 
-  readyAnswers() {
-    console.log('Ready Answers')
-    this.state = GAMESTATE.READY_ANSWER_COUNT
+  startQuiz() {
+    console.log(`Start Quiz: ${this.process.current}`)
+    this.state = GAMESTATE.START_QUIZ
   }
 
   endQuiz() {
     console.log('End Quiz')
-    this.state = GAMESTATE.START_END
-    return this.calculateRank()
-  }
-
-  readyNextQuiz() {
-    console.log('Ready Next Quiz')
-    this.state = GAMESTATE.READY_NEXT_QUIZ_COUNT
+    this.state = GAMESTATE.END_QUIZ
+    return this.calculateResult()
   }
 
   finishGame() {
     console.log('Finish Game')
     this.state = GAMESTATE.TOTAL_RESULT
-    return this.calculateRank()
+    return this.calculateResult()
   }
 
   isFinish() {
@@ -85,24 +80,31 @@ class Game {
     }
 
     player.answers.push(answer)
-    player.isCorrect = answer == this.quizzes[this.process.current - 1].answer
   }
 
-  calculateRank() {
-    this.players.forEach((player, _) => {
-      if (player.isCorrect) {
-        this.players.correctNum++
+  calculateResult() {
+    const correctAnswer = this.quizzes[this.process.current - 1].answer
+    this.players.forEach((_, player) => {
+      if (player.answers[this.process.current - 1] != correctAnswer) {
+        player.isSurvivor = false
       }
-      player.isCorrect = false
     })
+    return {
+      survivors: this.getSurvivors(),
+      answerStatics: this.getAnswerStatics()
+    }
+  }
 
-    return [...this.player.entries()]
-      .sort((a, b) => b[1].correctNum - a[1].correctNum)
-      .slice(0, RANK_SIZE)
-      .map(entry => ({
-        nickname: entry[0].nickname,
-        correctNum: entry[0].correctNum
-      }))
+  getSurvivors() {
+    return [...this.players.entries()]
+      .filter(([_, player]) => player.isSurvivor)
+      .map(([_, player]) => player.nickname)
+  }
+
+  getAnswerStatics() {
+    return [...this.players.entries()].map(
+      ([_, player]) => player.isSurvivor && player.answers[this.process.current - 1]
+    )
   }
 }
 

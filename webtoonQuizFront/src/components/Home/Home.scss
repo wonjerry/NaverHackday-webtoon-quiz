@@ -1,0 +1,58 @@
+$color: #4BC14F;
+
+.quizCreate {
+  margin-left: 465px;
+}
+
+.webtoon-live-text-top {
+  width: 337px;
+  opacity: 0.8;
+  font-family: NanumGothic;
+  font-size: 37px;
+  font-weight: bold;
+  line-height: 1.8;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: $color;
+}
+
+.webtoon-live-logo {
+  position: relative;
+  margin: 0 auto;
+  img {
+    width: 367px;
+  }
+}
+
+.webtoon-live-text-bottom {
+  opacity: 0.8;
+  font-family: NanumGothic;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: $color;
+  margin-top: 17px;
+}
+
+.start-time-text {
+  position: relative;
+  top: 145px;
+  color: $color;
+  font-size: 20px;
+}
+
+.start-button {
+  margin-top: 174px;
+  width: 367px;
+}
+
+.quiz_a {
+  width: 367px;
+}
+
+.user-info {
+  position: relative;
+  color: #4BC14F;
+  top: 10px;
+}

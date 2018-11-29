@@ -1,36 +1,35 @@
 const axios = require('axios')
+const moment = require('moment')
 
 const Game = require('./Game')
 const Timer = require('./Timer')
 const utils = require('./utils')
 
-const CLIENT_WAITING_TIME = 1000 * 5
-const GAME_WAITING_TIME = 1000 * 10
-const SHOW_RESULT_TIME = 1000 * 5
+const CLIENT_WAITING_TIME = 1000 * 30
+const GAME_WAITING_TIME = 1000 * 5
+const SHOW_RESULT_TIME = 1000 * 10
 
 class Gameroom {
   constructor(io) {
     this.io = io
     this.clients = new Map()
     this.game = null
+    this.gameStartTime = 0
+
     this.waitClients()
-  }
+  } 
 
   async waitClients() {
     console.log('Wait clients')
     // TODO(wonjerry): Connect with api server.
     // const quizzes = await this.getQuizzes()
     this.game = new Game()
+    this.gameStartTime = moment().valueOf() + CLIENT_WAITING_TIME
+    this.game.waitClients()
+    await utils.sleep(CLIENT_WAITING_TIME)
 
-    await Timer.start(CLIENT_WAITING_TIME, (fireTime, endTime) => {
-      this.broadCastMessage('waiting', {
-        currentTime: fireTime,
-        endTime
-      })
-    })
-
+    this.game.setPlayers(this.clients)
     await this.startGame()
-    this.restart()
   }
 
   async getQuizzes() {
@@ -47,7 +46,7 @@ class Gameroom {
     client.nickname = nickname
 
     client.on('answer', (message) => {
-      if (this.game.state !== Game.GAMESTATE.READY_ANSWER_COUNT) {
+      if (this.game.state !== Game.GAMESTATE.START_QUIZ) {
         return
       }
       this.game.setAnswer(client.id, message.answer)
@@ -59,13 +58,13 @@ class Gameroom {
     this.clients.delete(client.id)
   }
 
-  broadCastMessage(eventName, message) {
-    this.io.in('game').emit(eventName, message)
+  broadCastMessage(message) {
+    this.io.in('game').emit('message', message)
   }
 
   async startCountDown(millisecond) {
     await Timer.start(millisecond, (fireTime, endTime) => {
-      this.broadCastMessage('countDown', {
+      this.broadCastMessage({
         state: this.game.state,
         currentTime: fireTime,
         endTime
@@ -74,37 +73,36 @@ class Gameroom {
   }
 
   async startGame() {
-    while (true) {
-      this.game.startQuiz(this.clients)
-      this.broadCastMessage('quiz', {
+    while(true) {
+      this.game.startQuiz()
+      this.broadCastMessage({
         state: this.game.state,
         questionNum: this.game.process.current++,
         totalQuizSize: this.game.process.total
       })
 
-      this.game.readyAnswers()
-      await this.startCountDown(GAME_WAITING_TIME)
-
-      const rank = this.game.endQuiz()
-      this.broadCastMessage('quiz', {
-        state: this.game.state,
-        rank
-      })
-      await utils.sleep(2000)
+      await utils.sleep(GAME_WAITING_TIME)
 
       if (this.game.isFinish()) {
         break
       }
 
-      this.game.readyNextQuiz()
-      await this.startCountDown(SHOW_RESULT_TIME)
+      const result = this.game.endQuiz()
+      this.broadCastMessage({
+        state: this.game.state,
+        result
+      })
+
+      await utils.sleep(SHOW_RESULT_TIME)
     }
 
-    const rank = this.game.finishGame()
-    this.broadCastMessage('quiz', {
-      state: this.game.state,
-      rank
-    })
+    const totalResult = this.game.finishGame()
+      this.broadCastMessage({
+        state: this.game.state,
+        totalResult
+      })
+
+    this.restart()
   }
 
   restart() {

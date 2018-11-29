@@ -1,27 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import './App.css';
-import Home from './Components/Home/Home';
-import Result from './Components/Result/Result';
-import Login from './Components/Login/Login';
-class App extends Component {
+import Login from './components/Login'
+import Home from './components/Home'
+import WaitingRoom from './components/WaitingRoom'
+import Quiz from './components/Quiz'
+import Score from './components/Score'
+import Result from './components/Result'
+
+import './App.css'
+
+class App extends Component { 
   render() {
     return (
       <Router>
-       
         <div className="body">
-      
-          <p className="WEBTOON-LIVE-LOGO">WEBTOON
-          
-          <p className="text-style-1">LIVE</p>     
-          </p>
           <Route exact path="/" component={Login} />
           <Route exact path="/Home" component={Home} />
-          <Route exact path="/result" component={Result} />
+          <Route exact path="/WaitingRoom" component={WaitingRoom} />
+          <Route exact path="/Quiz" component={Quiz} />
+          <Route exact path="/Score" component={Score} />
+          <Route exact path="/Result" component={Result} />
         </div>
       </Router>
-    );
+    )
   }
 }
 
-export default App;
+export default App
