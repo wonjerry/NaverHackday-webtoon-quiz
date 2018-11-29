@@ -76,27 +76,27 @@ class Score extends Component {
     const { answerCount } = this.state
     const {
       answer,
-      question: { title, imgSrc, choices },
+      question: { title, description, img, option },
       nickname
     } = this.props
 
     progress1 = (
       <div className='scoreProgress'>
         <p className='scoreText'>
-          <strong>정답</strong> 2. {choices[1]}{' '}
+          <strong>정답</strong> 2. {option[1]}{' '}
         </p>
         <p> {answerCount[1]} 명</p>
       </div>
     )
     progress2 = (
       <div className='scoreProgress'>
-        <p className='scoreText'>1. {choices[0]}</p>
+        <p className='scoreText'>1. {option[0]}</p>
         <p> {answerCount[0]} 명</p>
       </div>
     )
     progress3 = (
       <div className='scoreProgress'>
-        <p className='scoreText'>3. {choices[2]}</p>
+        <p className='scoreText'>3. {option[2]}</p>
         <p> {answerCount[2]} 명</p>
       </div>
     )

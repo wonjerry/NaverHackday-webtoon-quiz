@@ -21,7 +21,7 @@ const setupSocket = (dispatch) => {
 
   socket.on('message', (message) => {
     console.log(message)
-    switch(message.state) {
+    switch (message.state) {
       case GAMESTATE.READY:
         dispatch(quizActionCreators.endGame(false))
         dispatch(homeActionCreators.enableStart(true))
@@ -48,7 +48,7 @@ const setupSocket = (dispatch) => {
         dispatch(waitingRoomActionCreators.startQuiz(false))
         break
       default:
-        // Do nothing.
+      // Do nothing.
     }
   })
 
