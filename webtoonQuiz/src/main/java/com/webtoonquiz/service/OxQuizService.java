@@ -17,5 +17,9 @@ public class OxQuizService {
     public List<OxQuiz> getOxQuizzes() {
         return oxQuizRepository.findAll();
     }
+    
+    public OxQuiz findOne(int id) {
+    	return oxQuizRepository.findOne(id);
+    }
 
 }

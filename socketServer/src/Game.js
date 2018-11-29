@@ -13,22 +13,12 @@ class Game {
     return GAMESTATE
   }
 
-  // TODO(wonjerry): Delete default parameter when api server connected.
-  constructor(
-    quizzes = [
-      { answer: 1 },
-      { answer: 1 },
-      { answer: 1 },
-      { answer: 1 },
-      { answer: 1 },
-      { answer: 1 }
-    ]
-  ) {
+  constructor(quizzes) {
     this.quizzes = quizzes
     this.state = GAMESTATE.READY
     this.process = {
       current: 1,
-      total: 5
+      total: quizzes.length
     }
     this.players = new Map()
   }
@@ -38,6 +28,7 @@ class Game {
   }
 
   setPlayers(clients) {
+    console.log(clients)
     clients.forEach((client, id) => {
       this.players.set(id, {
         answers: [],
@@ -45,6 +36,10 @@ class Game {
         isSurvivor: true
       })
     })
+  }
+
+  getCurrentQuestion() {
+    return this.quizzes[this.process.current - 1]
   }
 
   startQuiz() {
@@ -65,11 +60,12 @@ class Game {
   }
 
   isFinish() {
-    return this.process.current > this.process.total
+    return this.process.current >= this.process.total
   }
 
   // TODO(wonjerry): Implement enable modify answer later.
   setAnswer(id, answer) {
+    console.log('setAnswer : ', answer)
     if (!this.players.has(id)) {
       return
     }
@@ -83,8 +79,10 @@ class Game {
   }
 
   calculateResult() {
-    const correctAnswer = this.quizzes[this.process.current - 1].answer
-    this.players.forEach((_, player) => {
+    console.log(this.players)
+    const correctAnswer = this.quizzes[this.process.current - 1].quiz.solution
+    this.players.forEach((player, _) => {
+      console.log(player.answers[this.process.current - 1], correctAnswer)
       if (player.answers[this.process.current - 1] != correctAnswer) {
         player.isSurvivor = false
       }
@@ -103,7 +101,8 @@ class Game {
 
   getAnswerStatics() {
     return [...this.players.entries()].map(
-      ([_, player]) => player.isSurvivor && player.answers[this.process.current - 1]
+      ([_, player]) =>
+        player.isSurvivor && player.answers[this.process.current - 1]
     )
   }
 }

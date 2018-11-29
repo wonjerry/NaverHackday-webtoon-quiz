@@ -51,16 +51,16 @@ class Login extends Component {
     return (
       <div>
         <Container>
-          <div className="globe-container">
-            <img src={globe} alt="" />
+          <div className='globe-container'>
+            <img src={globe} alt='' />
           </div>
-          <div className="logo-container">
-            <img src={logo} alt="" />
+          <div className='logo-container'>
+            <img src={logo} alt='' />
           </div>
-          <div className="anonymous-container">
-            <img className="ananymous" src={anonymous} alt="" />
+          <div className='anonymous-container'>
+            <img className='ananymous' src={anonymous} alt='' />
           </div>
-          <div id="naver_id_login" className="naver-login" />
+          <div id='naver_id_login' className='naver-login' />
         </Container>
       </div>
     )

@@ -31,49 +31,8 @@ public class QuizService {
         return quizRepository.findAll();
 	}
 
-<<<<<<< HEAD
-    @Transactional
-  public List<QuizVO> getLastRoundIdAllQuizzes() {
-	  List<Round> round = roundRepository.findAllByOrderByIdDesc();
-
-        List<QuizVO> quizVOList =new ArrayList<>();
-        List<Quiz> quiz = quizRepository.findAllByRoundIdOrderById(round.get(0).getId());
-
-        for(int i=0; i<quiz.size(); i++){
-            QuizVO quizVO = new QuizVO();
-            if(quiz.get(i).getType().equals("option")){
-                quizVO.setQuiz(quiz.get(i));
-                String[] temp = {((OptionQuiz)quiz.get(i)).getOptionOne(),
-                        ((OptionQuiz)quiz.get(i)).getOptionTwo(),
-                        ((OptionQuiz)quiz.get(i)).getOptionThree(),
-                        ((OptionQuiz)quiz.get(i)).getOptionFour() };
-                quizVO.setOption(temp);
-
-            }
-            else{
-                quizVO.setQuiz(quiz.get(i));
-            }
-            quizVOList.add(quizVO);
-        }
-        return quizVOList;
-
-  }
 
 
-	public ResponseEntity<String> CreateOxQuiz(final OxQuiz oxQuiz){
-    quizRepository.save(oxQuiz);
-	  return ResponseEntity.ok("ox퀴즈 저장 완료");
-  }
-
-
-  public ResponseEntity<String> CreateOptionQuiz(final OptionQuiz optionQuiz){
-    quizRepository.save(optionQuiz);
-    return ResponseEntity.ok("객관식 퀴즈 저장 완료");
-  }
-
-
-
-=======
 	public List<Quiz> getRoundIdAllQuizzes(int roundId) {
 		return quizRepository.findAllByRoundIdOrderById(roundId);
 	}
@@ -99,8 +58,31 @@ public class QuizService {
 		return list;
 	}
 
-	public synchronized boolean addQuiz(Quiz quiz) {
+	public synchronized boolean addQuiz(OptionQuiz quiz) {
 		List<Quiz> list = quizRepository.findByRoundIdAndNum(quiz.getRoundId(),quiz.getNum());
+		
+		if (list.size() > 0) {
+			return false;
+		} else {
+			quizRepository.save(quiz);
+			return true;
+		}
+	}
+	
+	public synchronized boolean addOptionQuiz(OptionQuiz quiz) {
+		List<Quiz> list = quizRepository.findByRoundIdAndNum(quiz.getRoundId(),quiz.getNum());
+		
+		if (list.size() > 0) {
+			return false;
+		} else {
+			quizRepository.save(quiz);
+			return true;
+		}
+	}
+	
+	public synchronized boolean addOxQuiz(OxQuiz quiz) {
+		List<Quiz> list = quizRepository.findByRoundIdAndNum(quiz.getRoundId(),quiz.getNum());
+		
 		if (list.size() > 0) {
 			return false;
 		} else {
@@ -117,8 +99,8 @@ public class QuizService {
 		quizRepository.save(quiz);
 	}
 	
-	public void deleteQuiz(long quizId) {
+	public void deleteQuiz(int quizId) {
 		quizRepository.delete(quizId);
 	}
->>>>>>> master
+
 }

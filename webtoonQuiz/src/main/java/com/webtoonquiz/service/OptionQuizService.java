@@ -16,5 +16,9 @@ public class OptionQuizService {
     public List<OptionQuiz> getOptionQuizzes() {
         return optionQuizRepository.findAll();
     }
+    
+    public OptionQuiz findOne(int id) {
+    	return optionQuizRepository.findOne(id);
+    }
 
 }

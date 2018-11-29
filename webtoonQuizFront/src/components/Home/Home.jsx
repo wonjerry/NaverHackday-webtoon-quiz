@@ -29,7 +29,7 @@ class Home extends Component {
     super(props)
     this.state = {
       hasError: false,
-      buttonOpen: false,
+      buttonOpen: false
     }
     this.socket = getSocket()
     window.naverSignInCallback = this.naverSignInCallback.bind(this)
@@ -58,7 +58,7 @@ class Home extends Component {
     })
   }
 
-  naverSignInCallback(data) {
+  naverSignInCallback() {
     const naverLogin = new window.naver_id_login(CLIENT_ID, REDIRECT_URI)
     // TODO(wonjerry): Get from redux store.
     const nickname = naverLogin.getProfileData('nickname')
@@ -82,7 +82,7 @@ class Home extends Component {
     // TODO(wonjerry): Get start time from REST server.
     return !this.state.buttonOpen ? (
       <section
-        className="portfolio-experiment"
+        className='portfolio-experiment'
         onClick={() => {
           // if (!this.props.isStart) {
           //   return
@@ -94,20 +94,20 @@ class Home extends Component {
           this.props.history.push('/WaitingRoom')
         }}
       >
-        <a className="quiz_a">
-          <span className="text">GAME START</span>
-          <span className="line -right" />
-          <span className="line -top" />
-          <span className="line -left" />
-          <span className="line -bottom" />
+        <a className='quiz_a'>
+          <span className='text'>GAME START</span>
+          <span className='line -right' />
+          <span className='line -top' />
+          <span className='line -left' />
+          <span className='line -bottom' />
         </a>
       </section>
     ) : (
-      <Paper elevation={2} id="paper">
-        <Typography variant="h5" component="h3">
+      <Paper elevation={2} id='paper'>
+        <Typography variant='h5' component='h3'>
           대기중입니다.
         </Typography>
-        <Typography component="p">
+        <Typography component='p'>
           퀴즈 시작 시간은 00시 00분 입니다.
         </Typography>
       </Paper>
@@ -115,7 +115,9 @@ class Home extends Component {
   }
 
   getStartTimeText(startTime) {
-    return moment().isSameOrAfter(startTime, 'second') ? '게임중' : `시작시간: ${moment(startTime).format('HH시 m분')}`
+    return moment().isSameOrAfter(startTime, 'second')
+      ? '게임중'
+      : `시작시간: ${moment(startTime).format('HH시 m분')}`
   }
 
   render() {
@@ -128,23 +130,27 @@ class Home extends Component {
 
     return (
       <Container>
-        <div className="webtoon-live-text-top">대국민 라이브 퀴즈쇼</div>
-        <div className="webtoon-live-logo">
-          <img src={logo} alt="" />
+        <div className='webtoon-live-text-top'>대국민 라이브 퀴즈쇼</div>
+        <div className='webtoon-live-logo'>
+          <img src={logo} alt='' />
         </div>
-        <div className="webtoon-live-text-bottom">
-          <div className="line-first">와 함께하는 실시간 퀴즈쇼에 참여하시고</div>
-          <div className="line-second">엄청난 상금의 주인공이 되세요!</div>
+        <div className='webtoon-live-text-bottom'>
+          <div className='line-first'>
+            와 함께하는 실시간 퀴즈쇼에 참여하시고
+          </div>
+          <div className='line-second'>엄청난 상금의 주인공이 되세요!</div>
         </div>
-        <div className="start-time-text">{this.getStartTimeText(startTime)}</div>
-        <div className="start-button">{this.getStartButton()}</div>
-        <div className="user-info">환영합니다 {nickname}님</div>
+        <div className='start-time-text'>
+          {this.getStartTimeText(startTime)}
+        </div>
+        <div className='start-button'>{this.getStartButton()}</div>
+        <div className='user-info'>환영합니다 {nickname}님</div>
       </Container>
     )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   nickname: state.home.nickname,
   isStart: state.home.isStart
 })

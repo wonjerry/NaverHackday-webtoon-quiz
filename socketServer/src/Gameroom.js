@@ -5,9 +5,9 @@ const Game = require('./Game')
 const Timer = require('./Timer')
 const utils = require('./utils')
 
-const CLIENT_WAITING_TIME = 1000 * 30
+const CLIENT_WAITING_TIME = 1000 * 15
 const GAME_WAITING_TIME = 1000 * 5
-const SHOW_RESULT_TIME = 1000 * 10
+const SHOW_RESULT_TIME = 1000 * 5
 
 class Gameroom {
   constructor(io) {
@@ -17,13 +17,12 @@ class Gameroom {
     this.gameStartTime = 0
 
     this.waitClients()
-  } 
+  }
 
   async waitClients() {
     console.log('Wait clients')
-    // TODO(wonjerry): Connect with api server.
-    // const quizzes = await this.getQuizzes()
-    this.game = new Game()
+    const quizzes = await this.getQuizzes()
+    this.game = new Game(quizzes)
     this.gameStartTime = moment().valueOf() + CLIENT_WAITING_TIME
     this.game.waitClients()
     await utils.sleep(CLIENT_WAITING_TIME)
@@ -33,12 +32,14 @@ class Gameroom {
   }
 
   async getQuizzes() {
-    const { data } = await axios.get('http://localhost:8080/api/quizs')
-    return data.quizs
+    const { data } = await axios.get(
+      'http://106.10.33.128:8080/api/quizzes/round'
+    )
+    return data
   }
 
   addClient(client, nickname) {
-    if (this.clients.has(client.id)) {
+    if (!this.clients.has(client.id)) {
       this.clients.set(client.id, client)
     }
 
@@ -73,11 +74,15 @@ class Gameroom {
   }
 
   async startGame() {
-    while(true) {
+    // TODO(wonjerry): Check the client is joined game.
+    this.game.setPlayers(this.clients)
+    while (true) {
       this.game.startQuiz()
+      console.log( this.game.getCurrentQuestion())
       this.broadCastMessage({
         state: this.game.state,
-        questionNum: this.game.process.current++,
+        question: this.game.getCurrentQuestion(),
+        questionNum: this.game.process.current,
         totalQuizSize: this.game.process.total
       })
 
@@ -94,13 +99,15 @@ class Gameroom {
       })
 
       await utils.sleep(SHOW_RESULT_TIME)
+
+      this.game.process.current += 1
     }
 
     const totalResult = this.game.finishGame()
-      this.broadCastMessage({
-        state: this.game.state,
-        totalResult
-      })
+    this.broadCastMessage({
+      state: this.game.state,
+      totalResult
+    })
 
     this.restart()
   }

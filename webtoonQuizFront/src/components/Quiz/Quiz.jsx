@@ -8,8 +8,8 @@ import './CheckBox.scss'
 import './Switch.css'
 import './Quiz.scss'
 
-import jo from '../../img/jo.png'
 import { actionCreators } from '../../state/actions/quiz'
+import { getSocket } from '../../socket'
 
 const Container = styled.div`
   display: flex;
@@ -40,6 +40,7 @@ class Quiz extends Component {
 
   static getDerivedStateFromProps(nextProps) {
     if (nextProps.endQuiz) {
+      
       nextProps.history.push('/Score')
     }
 
@@ -84,7 +85,7 @@ class Quiz extends Component {
       for (let i = 0; i < quiz.length; i++) {
         if (quiz[i] === event.target) {
           quiz[i].checked = true
-          this.props.setAnswer(i)
+          getSocket().emit('answer', { answer: i + 1 })
         } else {
           quiz[i].checked = false
         }
@@ -143,12 +144,16 @@ class Quiz extends Component {
     
     const { hasError, answer, percent } = this.state
     const {
+
       question: { title, imgSrc, choices , type }
+
+
     } = this.props
 
     if (hasError) {
       return <div>Quiz화면이 에러가 났어요. 관리자에게 문의 바랍니다.</div>
     }
+
 
     if(this.props.question.type==="option"){
       return (

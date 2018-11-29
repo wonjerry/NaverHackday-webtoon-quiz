@@ -1,9 +1,6 @@
 package com.webtoonquiz.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -12,7 +9,7 @@ import lombok.*;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-
+@NoArgsConstructor
 @Table(name = "OptionQuiz")
 public class OptionQuiz extends Quiz {
 <<<<<<< HEAD
