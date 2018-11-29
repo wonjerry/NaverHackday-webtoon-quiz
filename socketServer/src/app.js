@@ -7,7 +7,7 @@ require('dotenv').config()
 
 const port = process.argv.slice(2, 3)
 const name = process.argv.slice(3, 4)
-console.log(port, name)
+
 if (!port && !server) {
   console.log('usage: node index.js port name')
 }
@@ -17,6 +17,8 @@ const GameRoom = require('./Gameroom.js')
 app.use('/', express.static(path.join(__dirname, '../public')))
 
 const gameroom = new GameRoom(io)
+
+io.set('origins', '*:*');
 
 io.on('connection', (socket) => {
   console.log(`Client has connected!!:  ${socket.id}`)

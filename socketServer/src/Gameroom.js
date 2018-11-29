@@ -60,6 +60,8 @@ class Gameroom {
   }
 
   broadCastMessage(message) {
+    const name = process.argv.slice(3, 4)
+    this.io.in('game').emit('message', { serverName: name })
     this.io.in('game').emit('message', message)
   }
 
