@@ -17,7 +17,7 @@ public class OptionQuizService {
         return optionQuizRepository.findAll();
     }
     
-    public OptionQuiz findOne(int id) {
+    public OptionQuiz findOne(long id) {
     	return optionQuizRepository.findOne(id);
     }
 

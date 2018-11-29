@@ -23,17 +23,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "Quiz")
 @NoArgsConstructor
 public class Quiz {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	protected int id;
+	protected long id;
 
-	@NotEmpty(message="주제 빈 칸을 채워주세요.")
+	@NotEmpty(message = "주제 빈 칸을 채워주세요.")
 	@Column(name = "title")
 	protected String title;
 
-	@NotEmpty(message="문제 설명 빈 칸을 채워주세요.")
+	@NotEmpty(message = "문제 설명 빈 칸을 채워주세요.")
 	@Column(name = "description")
 	protected String description;
 
@@ -42,14 +41,14 @@ public class Quiz {
 
 	@Column(name = "roundId")
 	protected int roundId;
-	
-	@Min(value=0, message="The product price must not be less than zero")
+
+	@Min(value = 0, message = "The product price must not be less than zero")
 	@Column(name = "num")
 	protected int num;
 
 	@Transient
 	private MultipartFile file;
-	
+
 	@Column(name = "imageName")
 	protected String imageName;
 }

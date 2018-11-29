@@ -8,9 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.webtoonquiz.model.Quiz;
 
-public interface QuizRepository extends JpaRepository<Quiz, Integer>{
+public interface QuizRepository extends JpaRepository<Quiz, Long>{
 	List<Quiz> findAllByRoundIdOrderById(int roundId);
 
-	List<Quiz> findByRoundIdAndNum(int roundId, int num);
-	
+	List<Quiz> findByRoundIdAndNum(int round, int num);
 }

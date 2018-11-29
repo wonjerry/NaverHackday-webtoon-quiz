@@ -113,6 +113,14 @@ class Quiz extends Component {
         this.buttonChange(event, false)
     }
   }
+  CheckSwitch(event){
+    if(event.target.id==="no"){
+      this.props.setAnswer(1);
+    }
+    else if (event.target.id==="yes"){
+      this.props.setAnswer(0);      
+    }
+  }
 
   getChoiceButtion(order, choice) {
     return (
@@ -133,32 +141,67 @@ class Quiz extends Component {
   }
 
   render() {
+    
     const { hasError, answer, percent } = this.state
     const {
-      question: { title, description, img, option }
+
+      question: { title, imgSrc, choices , type }
+
+
     } = this.props
+
     if (hasError) {
       return <div>Quiz화면이 에러가 났어요. 관리자에게 문의 바랍니다.</div>
     }
 
-    return (
-      <Container>
-        <div className='quiz-img-container'>
-          <img src={img} alt='' className='quizImg' />
+
+    if(this.props.question.type==="option"){
+      return (
+        <Container>
+          <div className='quiz-img-container'>
+            <img src={jo} alt='img' className='quizImg' />
+          </div>
+          <div className='quiz-title'>{title}</div>
+          <div className='quiz-choices'>
+            {choices.map((choice, index) => this.getChoiceButtion(index, choice))}
+          </div>
+          <Line
+            strokeWidth='2'
+            trailWidth='2'
+            percent={percent}
+            strokeLinecap='square'
+            trailColor='rgba(255,255,255,0.05)'
+          />
+        </Container>
+      )
+    }
+
+    else if(this.props.question.type==="ox"){
+      return (
+        <Container>
+          <div className='quiz-title'>{title}</div>
+          <div className="quiz_ox"></div>
+            <div class="toggle-radio">
+            <input type="radio" v-model="picked" name="rdo" id="yes" onClick={this.CheckSwitch.bind(this)} />
+            <input type="radio" v-model="picked" name="rdo" id="no"  onClick={this.CheckSwitch.bind(this)} />
+            <div class="switch">
+              <label for="yes">Yes</label>
+              <label for="no">No</label>
+              <span></span>
+            </div>
         </div>
-        <div className='quiz-title'>{description}</div>
-        <div className='quiz-choices'>
-          {option.map((choice, index) => this.getChoiceButtion(index, choice))}
-        </div>
-        <Line
-          strokeWidth='2'
-          trailWidth='2'
-          percent={percent}
-          strokeLinecap='square'
-          trailColor='rgba(255,255,255,0.05)'
-        />
-      </Container>
-    )
+        
+          <Line
+              strokeWidth='2'
+              trailWidth='2'
+              percent={percent}
+              strokeLinecap='square'
+              trailColor='rgba(255,255,255,0.05)'
+            />
+        </Container>
+      )
+    }
+
   }
 }
 
