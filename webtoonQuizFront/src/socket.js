@@ -41,6 +41,7 @@ const setupSocket = (dispatch) => {
         dispatch(scoreActionCreators.setResult(message.result))
         break
       case GAMESTATE.TOTAL_RESULT:
+        dispatch(resultActionCreators.setTotalResult(message.totalResult))
         dispatch(quizActionCreators.endGame(true))
         dispatch(waitingRoomActionCreators.startQuiz(false))
         dispatch(scoreActionCreators.restartQuiz(false))

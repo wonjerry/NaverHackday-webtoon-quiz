@@ -46,20 +46,8 @@ class Result extends Component {
     }
   }
   render() {
-    let winnerResult = []
-    let winnerResult1 = []
-    let winnerResult2 = []
-
-    let count = 7
-    for (var i = 0; i < this.state.winner.length; i++) {
-      if (i < count)
-        winnerResult[i] = <p className='winner'>{this.state.winner[i]} </p>
-      else if (i < count * 2)
-        winnerResult1[i] = <p className='winner'>{this.state.winner[i]} </p>
-      else if (i < count * 3)
-        winnerResult2[i] = <p className='winner'>{this.state.winner[i]} </p>
-    }
-
+    console.log(this.props.totalResult.survivors)
+    console.log(this.props.totalResult)
     return (
       <div>
         <Container>
@@ -72,9 +60,15 @@ class Result extends Component {
             </p>
           </Question>
           <div className='mainScore'>
-            <div className='wordBoxScore'>{winnerResult}</div>
-            <div className='wordBoxScore'>{winnerResult1}</div>
-            <div className='wordBoxScore'>{winnerResult2}</div>
+            <div className='wordBoxScore'>
+              {
+                this.props.totalResult.survivors.map((survivor) => {
+                  return <p className='winner'>{survivor}</p>
+                })
+              }
+            </div>
+            {/* <div className='wordBoxScore'>{winnerResult1}</div>
+            <div className='wordBoxScore'>{winnerResult2}</div> */}
           </div>
         </Container>
       </div>

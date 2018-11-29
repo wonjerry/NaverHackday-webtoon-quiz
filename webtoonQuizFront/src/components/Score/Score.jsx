@@ -25,6 +25,7 @@ const Container = styled.div`
 let progress1 = ''
 let progress2 = ''
 let progress3 = ''
+let progress4 = ''
 
 class Score extends Component {
   constructor(props) {
@@ -73,103 +74,43 @@ class Score extends Component {
   }
 
   render() {
-    const { answerCount } = this.state
+    console.log(this.props)
     const {
       answer,
       question: { title, description, img, option },
-      nickname
+      nickname,
+      result: { survivors }
     } = this.props
 
-    progress1 = (
-      <div className='scoreProgress'>
-        <p className='scoreText'>
-          <strong>정답</strong> 2. {option[1]}{' '}
-        </p>
-        <p> {answerCount[1]} 명</p>
-      </div>
-    )
-    progress2 = (
-      <div className='scoreProgress'>
-        <p className='scoreText'>1. {option[0]}</p>
-        <p> {answerCount[0]} 명</p>
-      </div>
-    )
-    progress3 = (
-      <div className='scoreProgress'>
-        <p className='scoreText'>3. {option[2]}</p>
-        <p> {answerCount[2]} 명</p>
-      </div>
-    )
+    // progress1 = (
+    //   <div className='scoreProgress'>
+    //     <p className='scoreText'>
+    //       <strong>정답</strong> 2. {option[1]}{' '}
+    //     </p>
+    //     <p> {answerStatics[0]} 명</p>
+    //   </div>
+    // )
+    // progress2 = (
+    //   <div className='scoreProgress'>
+    //     <p className='scoreText'>1. {option[0]}</p>
+    //     <p> {answerStatics[0]} 명</p>
+    //   </div>
+    // )
+    // progress3 = (
+    //   <div className='scoreProgress'>
+    //     <p className='scoreText'>3. {option[2]}</p>
+    //     <p> {answerStatics[0]} 명</p>
+    //   </div>
+    // )
 
-    if (this.state.connect) {
-      return (
-        <div className='score'>
-          <Container>
-            <div className='list'>
-              <WinnerList />
-            </div>
-            <SockJsClient
-              url={chatURL}
-              topics={['/topic/answer']}
-              onMessage={(msg) => {
-                var length = this.state.data.length
-                this.state.data[length] = msg.content
-                this.setState({ data: this.state.data })
-                var el = document.querySelector('.chatList')
-                el.scrollTop += 230
-              }}
-              onConnect={() => {
-                this.setState({ connect: true })
-              }}
-              onDisConnect={() => {
-                this.setState({ connect: false })
-              }}
-              ref={(client) => {
-                this.clientRef = client
-              }}
-            />
+    // progress4 = (
+    //   <div className='scoreProgress'>
+    //     <p className='scoreText'>4. {option[3]}</p>
+    //     <p> {answerStatics[0]} 명</p>
+    //   </div>
+    // )
 
-            <h2>{this.state.question}</h2>
-            <p className='explain'>
-              {' '}
-              퀴즈 제출 시간은 5초 입니다. 내가 제출한 답{' '}
-              <strong>{answer + 1}</strong>
-            </p>
-            <p className='explain'>
-              {' '}
-              현재 {this.state.totalUser}명이 참가중입니다.
-            </p>
-            <h2 className='animated infinite slideInUp delay-1s'>
-              {this.state.time}
-            </h2>
-            <br />
-
-            {progress1}
-            <Progress percent={this.state.answerCount[1]} status='success' />
-            {progress2}
-            <Progress
-              percent={this.state.answerCount[0]}
-              status='error'
-              theme={{
-                error: {
-                  symbol: '😱',
-                  color: '#fbc630'
-                }
-              }}
-            />
-            {progress3}
-            <Progress percent={this.state.answerCount[2]} status='error' />
-
-            <Chat
-              clientRef={this.clientRef}
-              data={this.state.data}
-              nickname={nickname}
-              props={this.props}
-            />
-          </Container>
-        </div>
-      )
-    }
+    const isSurvivor = survivors.includes(nickname)
 
     return (
       <div className='score'>
@@ -184,19 +125,22 @@ class Score extends Component {
             <strong>{answer + 1}</strong>
           </p>
           <p className='explain'>
-            {`현재 ${this.state.totalUser}명이 참가중입니다.`}
+            {`현재 ${survivors.length}명이 참가중입니다.`}
           </p>
 
           <h2 className='animated infinite slideInUp delay-1s'>
             {this.state.time}
           </h2>
           <br />
+          <div className='is-survivor'>
+            {isSurvivor ? '생존하였습니다' : '탈락하였습니다'}
+          </div>
 
-          {progress1}
-          <Progress percent={answerCount[1]} status='success' />
+          {/* {progress1}
+          <Progress percent={answerStatics[0]} status='success' />
           {progress2}
           <Progress
-            percent={answerCount[0]}
+            percent={answerStatics[0]}
             status='error'
             theme={{
               error: {
@@ -206,7 +150,9 @@ class Score extends Component {
             }}
           />
           {progress3}
-          <Progress percent={answerCount[2]} status='error' />
+          <Progress percent={answerStatics[0]} status='error' />
+          {progress4}
+          <Progress percent={answerStatics[0]} status='error' /> */}
         </Container>
       </div>
     )
