@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
 
   socket.on('admin', (message) => {
     console.log(`Admin client join: ${socket.id}`)
-    socket.emit('admin', { text: 'Admin client join'})
+    socket.emit('admin', { text: 'Admin client join' })
 
     // TODO(wonjerry): get this signal from admin
     socket.on('startNextQuiz', () => {

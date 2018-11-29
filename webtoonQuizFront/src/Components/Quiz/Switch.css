@@ -18,3 +18,88 @@
 .rc-progress-line {
   margin-bottom: 2%;
 }
+.quiz_ox{
+  margin-bottom: 70%;
+}
+
+.switch {
+  position: absolute;
+  top: 50%;
+  left: 46%;
+  width: 250px;
+  height: 100px;
+  text-align: center;
+  margin: -30px 0 0 -75px;
+  background: #00bc9c;
+  transition: all 0.2s ease;
+  border-radius: 50px;
+}
+.switch span {
+  position: absolute;
+  width: 20px;
+  height: 4px;
+  top: 50%;
+  left: 50%;
+  margin: -2px 0px 0px -4px;
+  background: #fff;
+  display: block;
+  transform: rotate(-45deg);
+  transition: all 0.2s ease;
+}
+.switch span:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 4px;
+  height: 12px;
+  margin-top: -8px;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+input[type=radio] {
+  display: none;
+  z-index: 2;
+}
+.switch label {
+  cursor: pointer;
+  color: rgba(0,0,0,0.2);
+  width: 60px;
+  line-height: 90px;
+  transition: all 0.2s ease;
+  z-index: 2;
+  
+}
+label[for=yes] {
+  position: absolute;
+  font-size: 30px;
+  left: 20px;
+  height: 20px;
+}
+label[for=no] {
+  font-size: 30px;
+  position: absolute;
+  right: 15px;
+  z-index: 3;
+}
+#no:checked ~ .switch {
+  background: #eb4f37;
+}
+#no:checked ~ .switch span {
+  background: #fff;
+  margin-left: -8px;
+}
+#no:checked ~ .switch span:after {
+  background: #fff;
+  height: 20px;
+  margin-top: -8px;
+  margin-left: 8px;
+}
+#yes:checked ~ .switch label[for=yes] {
+  color: #fff;
+}
+#no:checked ~ .switch label[for=no] {
+  color: #fff;
+}
+.countText{
+  font-size:50px;
+}

@@ -8,8 +8,8 @@ import './CheckBox.scss'
 import './Switch.css'
 import './Quiz.scss'
 
-import jo from '../../img/jo.png'
 import { actionCreators } from '../../state/actions/quiz'
+import { getSocket } from '../../socket'
 
 const Container = styled.div`
   display: flex;
@@ -40,6 +40,7 @@ class Quiz extends Component {
 
   static getDerivedStateFromProps(nextProps) {
     if (nextProps.endQuiz) {
+      
       nextProps.history.push('/Score')
     }
 
@@ -84,7 +85,7 @@ class Quiz extends Component {
       for (let i = 0; i < quiz.length; i++) {
         if (quiz[i] === event.target) {
           quiz[i].checked = true
-          this.props.setAnswer(i)
+          getSocket().emit('answer', { answer: i + 1 })
         } else {
           quiz[i].checked = false
         }
@@ -112,6 +113,14 @@ class Quiz extends Component {
         this.buttonChange(event, false)
     }
   }
+  CheckSwitch(event){
+    if(event.target.id==="no"){
+      this.props.setAnswer(1);
+    }
+    else if (event.target.id==="yes"){
+      this.props.setAnswer(0);      
+    }
+  }
 
   getChoiceButtion(order, choice) {
     return (
@@ -132,32 +141,67 @@ class Quiz extends Component {
   }
 
   render() {
+    
     const { hasError, answer, percent } = this.state
     const {
-      question: { title, imgSrc, choices }
+
+      question: { title, imgSrc, choices , type }
+
+
     } = this.props
+
     if (hasError) {
       return <div>Quiz화면이 에러가 났어요. 관리자에게 문의 바랍니다.</div>
     }
 
-    return (
-      <Container>
-        <div className='quiz-img-container'>
-          <img src={jo} alt='img' className='quizImg' />
+
+    if(this.props.question.type==="option"){
+      return (
+        <Container>
+          <div className='quiz-img-container'>
+            <img src={jo} alt='img' className='quizImg' />
+          </div>
+          <div className='quiz-title'>{title}</div>
+          <div className='quiz-choices'>
+            {choices.map((choice, index) => this.getChoiceButtion(index, choice))}
+          </div>
+          <Line
+            strokeWidth='2'
+            trailWidth='2'
+            percent={percent}
+            strokeLinecap='square'
+            trailColor='rgba(255,255,255,0.05)'
+          />
+        </Container>
+      )
+    }
+
+    else if(this.props.question.type==="ox"){
+      return (
+        <Container>
+          <div className='quiz-title'>{title}</div>
+          <div className="quiz_ox"></div>
+            <div class="toggle-radio">
+            <input type="radio" v-model="picked" name="rdo" id="yes" onClick={this.CheckSwitch.bind(this)} />
+            <input type="radio" v-model="picked" name="rdo" id="no"  onClick={this.CheckSwitch.bind(this)} />
+            <div class="switch">
+              <label for="yes">Yes</label>
+              <label for="no">No</label>
+              <span></span>
+            </div>
         </div>
-        <div className='quiz-title'>{title}</div>
-        <div className='quiz-choices'>
-          {choices.map((choice, index) => this.getChoiceButtion(index, choice))}
-        </div>
-        <Line
-          strokeWidth='2'
-          trailWidth='2'
-          percent={percent}
-          strokeLinecap='square'
-          trailColor='rgba(255,255,255,0.05)'
-        />
-      </Container>
-    )
+        
+          <Line
+              strokeWidth='2'
+              trailWidth='2'
+              percent={percent}
+              strokeLinecap='square'
+              trailColor='rgba(255,255,255,0.05)'
+            />
+        </Container>
+      )
+    }
+
   }
 }
 

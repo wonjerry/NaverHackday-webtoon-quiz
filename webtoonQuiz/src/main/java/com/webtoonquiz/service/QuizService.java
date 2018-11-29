@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.webtoonquiz.model.Quiz;
 import com.webtoonquiz.repo.QuizRepository;
 
-import javax.swing.text.html.ListView;
 import javax.transaction.Transactional;
 
 @Service
@@ -25,16 +24,16 @@ public class QuizService {
 	private QuizRepository quizRepository;
 
 	@Autowired
-	private RoundRepository roundRepository;
+    private RoundRepository roundRepository;
 
 	public List<Quiz> getAllQuizzes() {
-		return quizRepository.findAll();
+        return quizRepository.findAll();
 	}
 
 	public List<Quiz> getRoundIdAllQuizzes(int roundId) {
 		return quizRepository.findAllByRoundIdOrderById(roundId);
 	}
-	
+
 	@Transactional
 	public List<QuizVO> getLastRoundIdAllQuizzes() {
 		List<Round> round = roundRepository.findAllByOrderByIdDesc();
@@ -64,6 +63,7 @@ public class QuizService {
 		return ResponseEntity.ok("ox퀴즈 저장 완료");
 	}
 
+	@Transactional
 	public ResponseEntity<String> CreateOptionQuiz(final OptionQuiz optionQuiz) {
 		quizRepository.save(optionQuiz);
 		return ResponseEntity.ok("객관식 퀴즈 저장 완료");
@@ -115,7 +115,7 @@ public class QuizService {
 	public Quiz findQuizById(long id) {
 		return quizRepository.findOne(id);
 	}
-	
+
 	public void updateOxQuiz(OxQuiz quiz) {
 		quizRepository.save(quiz);
 	}
