@@ -2,12 +2,8 @@ import { actionTypes } from '../actions/quiz'
 
 const initialState = {
   question: {
-
-    title: "다음의 등장인물이 나오는 웹툰의 제목을 고르시오.",
-    imgSrc: '../../img/jo.png',
-    choices: ["자까","조석","박용제"]  ,
-    type : "ox" 
-
+    option: [],
+    quiz: { title:'',	description: '', img: '', type: 'option' }
   },
   answer: 0,
   endQuiz: false,

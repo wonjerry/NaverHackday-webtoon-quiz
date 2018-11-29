@@ -2,7 +2,7 @@ import { actionTypes } from '../actions/waitingRoom'
 
 const initialState = {
   startTime: 0,
-  startQuiz: true
+  startQuiz: false
 }
 
 const setStartTime = (state, { startTime }) => {

@@ -5,6 +5,13 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 require('dotenv').config()
 
+const port = process.argv.slice(2, 3)
+const name = process.argv.slice(3, 4)
+console.log(port, name)
+if (!port && !server) {
+  console.log('usage: node index.js port name')
+}
+
 const GameRoom = require('./Gameroom.js')
 
 app.use('/', express.static(path.join(__dirname, '../public')))
@@ -46,8 +53,6 @@ io.on('connection', (socket) => {
   })
 })
 
-const { HOST, PORT } = process.env
-
-server.listen(PORT, HOST, () => {
-  console.log(`Listening on http://${HOST}:${PORT}/`)
+server.listen(Number(port), '0.0.0.0', () => {
+  console.log(`Listening on http://0.0.0.0:${port}/`)
 })

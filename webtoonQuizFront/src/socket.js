@@ -49,7 +49,7 @@ const setupSocket = (dispatch) => {
         dispatch(waitingRoomActionCreators.startQuiz(false))
         break
       default:
-      // Do nothing.
+        console.log(`Server name : ${message.serverName}`)
     }
   })
 
