@@ -7,6 +7,7 @@ import com.webtoonquiz.model.OptionQuiz;
 import com.webtoonquiz.model.OxQuiz;
 import com.webtoonquiz.model.Round;
 import com.webtoonquiz.repo.RoundRepository;
+import com.webtoonquiz.vo.QuizVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.webtoonquiz.model.Quiz;
 import com.webtoonquiz.repo.QuizRepository;
 
+import javax.swing.text.html.ListView;
 import javax.transaction.Transactional;
 
 @Service
@@ -24,14 +26,36 @@ public class QuizService {
 
 	@Autowired
     private RoundRepository roundRepository;
+
 	public List<Quiz> getAllQuizzes() {
-		return quizRepository.findAll();
+        return quizRepository.findAll();
 	}
 
     @Transactional
-  public List<Quiz> getLastRoundIdAllQuizzes() {
+  public List<QuizVO> getLastRoundIdAllQuizzes() {
 	  List<Round> round = roundRepository.findAllByOrderByIdDesc();
-    return quizRepository.findAllByRoundIdOrderById(round.get(0).getId());
+
+        List<QuizVO> quizVOList =new ArrayList<>();
+        List<Quiz> quiz = quizRepository.findAllByRoundIdOrderById(round.get(0).getId());
+
+        for(int i=0; i<quiz.size(); i++){
+            QuizVO quizVO = new QuizVO();
+            if(quiz.get(i).getType().equals("option")){
+                quizVO.setQuiz(quiz.get(i));
+                String[] temp = {((OptionQuiz)quiz.get(i)).getOptionOne(),
+                        ((OptionQuiz)quiz.get(i)).getOptionTwo(),
+                        ((OptionQuiz)quiz.get(i)).getOptionThree(),
+                        ((OptionQuiz)quiz.get(i)).getOptionFour() };
+                quizVO.setOption(temp);
+
+            }
+            else{
+                quizVO.setQuiz(quiz.get(i));
+            }
+            quizVOList.add(quizVO);
+        }
+        return quizVOList;
+
   }
 
 

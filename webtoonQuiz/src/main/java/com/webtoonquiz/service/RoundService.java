@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Timer;
 
@@ -23,7 +24,7 @@ public class RoundService {
     }
 
     @Transactional
-    public ResponseEntity<Time> LastRoundStart(){
+    public ResponseEntity<Timestamp> LastRoundStart(){
         List<Round> round = roundRepository.findAllByOrderByIdDesc();
         return ResponseEntity.ok(round.get(0).getTime());
     }

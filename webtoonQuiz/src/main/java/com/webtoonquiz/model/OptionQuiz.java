@@ -34,16 +34,16 @@ public class OptionQuiz extends Quiz {
 
 	@Column(name="option_one")
 	 String optionOne;
-	
+
 	@Column(name="option_two")
 	String optionTwo;
-	
+
 	@Column(name="option_three")
 	 String optionThree;
-	
+
 	@Column(name="option_four")
 	 String optionFour;
-	
+
 	@Column(name="solution")
 	 int solution;
 

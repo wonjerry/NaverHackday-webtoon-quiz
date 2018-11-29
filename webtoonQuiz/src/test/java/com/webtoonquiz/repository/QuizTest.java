@@ -45,10 +45,6 @@ public class QuizTest {
 
   @Test
     public void createOxQuizTest(){
-//       testQuiz.setTitle("제목제목");
-//       testQuiz.setDescription("내용내용");
-//       testQuiz.setRoundId(1);
-//       testQuiz.setType("ox");
        quizRepository.save(testOxQuiz);
     }
 

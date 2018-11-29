@@ -17,6 +17,6 @@ public class Round {
   int id;
 
   @Column(name="startTime")
-  Time time;
+  Timestamp time;
 
 }
