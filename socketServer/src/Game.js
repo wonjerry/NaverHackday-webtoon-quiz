@@ -2,10 +2,8 @@ const _ = require('lodash')
 const GAMESTATE = {
   READY: 0,
   START_QUIZ: 1,
-  READY_ANSWER_COUNT: 2,
-  END_QUIZ: 3,
-  READY_NEXT_QUIZ_COUNT: 4,
-  TOTAL_RESULT: 5
+  END_QUIZ: 2,
+  TOTAL_RESULT: 3
 }
 
 class Game {

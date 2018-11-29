@@ -1,10 +1,11 @@
 const axios = require('axios')
+const moment = require('moment')
 
 const Game = require('./Game')
 const Timer = require('./Timer')
 const utils = require('./utils')
 
-const CLIENT_WAITING_TIME = 1000 * 5
+const CLIENT_WAITING_TIME = 1000 * 60 * 3
 const GAME_WAITING_TIME = 1000 * 10
 const SHOW_RESULT_TIME = 1000 * 5
 
@@ -13,20 +14,18 @@ class Gameroom {
     this.io = io
     this.clients = new Map()
     this.game = null
-  }
+    this.gameStartTime = 0
+
+    this.waitClients()
+  } 
 
   async waitClients() {
     console.log('Wait clients')
     // TODO(wonjerry): Connect with api server.
     // const quizzes = await this.getQuizzes()
     this.game = new Game()
-
-    await Timer.start(CLIENT_WAITING_TIME, (fireTime, endTime) => {
-      this.broadCastMessage('waiting', {
-        currentTime: fireTime,
-        endTime
-      })
-    })
+    this.gameStartTime = moment().valueOf() + CLIENT_WAITING_TIME
+    await utils.sleep(CLIENT_WAITING_TIME)
 
     await this.startGame()
     this.restart()
@@ -75,7 +74,7 @@ class Gameroom {
   async startGame() {
     while (true) {
       this.game.startQuiz(this.clients)
-      this.broadCastMessage('quiz', {
+      this.broadCastMessage('message', {
         state: this.game.state,
         questionNum: this.game.process.current++,
         totalQuizSize: this.game.process.total

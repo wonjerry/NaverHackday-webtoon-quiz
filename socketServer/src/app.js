@@ -15,8 +15,12 @@ io.on('connection', (socket) => {
   console.log(`Client has connected!!:  ${socket.id}`)
 
   socket.on('join game', (message) => {
-    console.log(`Client join Game:  ${socket.id}`)
+    console.log(`Client join Game: ${socket.id}`)
     gameroom.addClient(socket, message.nickname)
+    socket.emit('message', {
+      state: gameroom.game.state,
+      startTime: gameroom.gameStartTime
+    })
   })
 
   socket.on('disconnect', () => {
