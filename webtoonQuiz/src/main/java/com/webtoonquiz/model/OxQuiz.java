@@ -12,6 +12,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "OxQuiz")
+@NoArgsConstructor
 public class OxQuiz extends Quiz {
 
 	@Builder

@@ -13,5 +13,25 @@
 	<definition name="dashboard" extends="mainLayout">
 		<put-attribute name="body" value="/ui/jsp/view/dashboard.jsp" />
 	</definition>
+	
+	<definition name="viewQuiz" extends="mainLayout">
+		<put-attribute name="body" value="/ui/jsp/view/viewQuiz.jsp" />
+	</definition>
+	
+	<definition name="addOptionQuiz" extends="mainLayout">
+		<put-attribute name="body" value="/ui/jsp/view/addOptionQuiz.jsp" />
+	</definition>
+	
+	<definition name="addOxQuiz" extends="mainLayout">
+		<put-attribute name="body" value="/ui/jsp/view/addOxQuiz.jsp" />
+	</definition>
+	
+	<definition name="updateOxQuiz" extends="mainLayout">
+		<put-attribute name="body" value="/ui/jsp/view/updateOxQuiz.jsp" />
+	</definition>
+	
+	<definition name="updateOptionQuiz" extends="mainLayout">
+		<put-attribute name="body" value="/ui/jsp/view/updateOptionQuiz.jsp" />
+	</definition>
 
 </tiles-definitions>
