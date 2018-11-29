@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Login from './components/Login'
 import Home from './components/Home'
+import WaitingRoom from './components/WaitingRoom'
 import Quiz from './components/Quiz'
 import Score from './components/Score'
 import Result from './components/Result'
@@ -15,6 +16,7 @@ class App extends Component {
         <div className="body">
           <Route exact path="/" component={Login} />
           <Route exact path="/Home" component={Home} />
+          <Route exact path="/WaitingRoom" component={WaitingRoom} />
           <Route exact path="/Quiz" component={Quiz} />
           <Route exact path="/Score" component={Score} />
           <Route exact path="/Result" component={Result} />

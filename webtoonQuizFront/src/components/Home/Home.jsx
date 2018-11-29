@@ -31,7 +31,7 @@ class Home extends Component {
       hasError: false,
       buttonOpen: false,
     }
-    this.socket = this.getSocket()
+    this.socket = getSocket()
     window.naverSignInCallback = this.naverSignInCallback.bind(this)
   }
 
@@ -84,9 +84,14 @@ class Home extends Component {
       <section
         className="portfolio-experiment"
         onClick={() => {
-          if (this.props.isStart) {
-            this.props.history.push('/Quiz')
-          }
+          // if (!this.props.isStart) {
+          //   return
+          // }
+          // TODO(wonjerry): Do it in redux saga.
+          this.socket.emit('join game', {
+            nickname: this.props.nickname
+          })
+          this.props.history.push('/WaitingRoom')
         }}
       >
         <a className="quiz_a">
@@ -141,7 +146,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   nickname: state.home.nickname,
-  startTime: state.home.startTime
+  isStart: state.home.isStart
 })
 
 const mapDispatchToProps = {

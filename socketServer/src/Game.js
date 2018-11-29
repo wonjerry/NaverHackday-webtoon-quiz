@@ -1,9 +1,11 @@
 const _ = require('lodash')
+
 const GAMESTATE = {
   READY: 0,
-  START_QUIZ: 1,
-  END_QUIZ: 2,
-  TOTAL_RESULT: 3
+  WAITING: 1,
+  START_QUIZ: 2,
+  END_QUIZ: 3,
+  TOTAL_RESULT: 4
 }
 
 class Game {
@@ -28,6 +30,10 @@ class Game {
       total: 5
     }
     this.players = new Map()
+  }
+
+  waitClients() {
+    this.state = GAMESTATE.WAITING
   }
 
   startQuiz(clients) {
@@ -85,7 +91,7 @@ class Game {
 
   calculateResult() {
     const correctAnswer = this.quizzes[this.process.current - 1].answer
-    this.player.forEach((_, player) => {
+    this.players.forEach((_, player) => {
       if (player.answers[this.process.current - 1] != correctAnswer) {
         player.isSurvivor = false
       }
@@ -97,13 +103,13 @@ class Game {
   }
 
   getSurvivors() {
-    return [...this.player.entries()]
+    return [...this.players.entries()]
       .filter(([_, player]) => player.isSurvivor)
       .map(([_, player]) => player.nickname)
   }
 
   getAnswerStatics() {
-    return [...this.player.entries()].map(
+    return [...this.players.entries()].map(
       ([_, player]) => player.isSurvivor && player.answers[this.process.current - 1]
     )
   }

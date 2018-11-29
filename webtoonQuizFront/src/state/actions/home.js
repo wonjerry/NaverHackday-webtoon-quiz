@@ -14,7 +14,7 @@ const setNickname = (nickname) => ({
 })
 
 const enableStart = (isStart) => ({
-  type: SET_NICKNAME,
+  type: ENABLE_START,
   payload: {
     isStart
   }

@@ -1,1 +1,1 @@
-import { default } from './WaitingRoom.jsx'
+export { default } from './WaitingRoom.jsx'

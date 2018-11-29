@@ -25,6 +25,7 @@ class Gameroom {
     // const quizzes = await this.getQuizzes()
     this.game = new Game()
     this.gameStartTime = moment().valueOf() + CLIENT_WAITING_TIME
+    this.game.waitClients()
     await utils.sleep(CLIENT_WAITING_TIME)
 
     await this.startGame()

@@ -14,6 +14,10 @@ const gameroom = new GameRoom(io)
 io.on('connection', (socket) => {
   console.log(`Client has connected!!:  ${socket.id}`)
 
+  // socket.emit('message', {
+  //   state: 0,
+  // })
+
   socket.on('join game', (message) => {
     console.log(`Client join Game: ${socket.id}`)
     gameroom.addClient(socket, message.nickname)
