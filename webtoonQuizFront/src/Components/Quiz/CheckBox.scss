@@ -1,3 +1,5 @@
+$color: #4BC14F;
+
 *,
 *::before,
 *::after {
@@ -31,11 +33,12 @@ $color-negative: rgb(255, 255, 255);
   display: inline-block;
   position: relative;
   overflow: hidden;
-  width: 660px;
-  height: 120px;
-  border-radius: 99px;
+  width: 346px;
+  height: 52px;
+  /* border-radius: 99px; */
   vertical-align: text-bottom;
-  border:2px solid gray;
+  background: $color;
+  /* border: 2px solid gray; */
   
   input {
     position: absolute;

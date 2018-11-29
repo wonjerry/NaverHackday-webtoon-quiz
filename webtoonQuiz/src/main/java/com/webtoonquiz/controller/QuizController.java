@@ -54,7 +54,7 @@ public class QuizController {
 
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping(value = "/quizs")
 	public ResponseEntity<Quiz> putQuiz(@RequestBody Quiz quiz) {
 		quizService.updateQuiz(quiz);

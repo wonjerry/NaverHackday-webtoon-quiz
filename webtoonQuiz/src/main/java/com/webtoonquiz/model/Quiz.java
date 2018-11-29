@@ -1,47 +1,35 @@
 package com.webtoonquiz.model;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="type")
-public class Quiz implements Serializable {
+@Entity
+@Table(name = "Quiz")
+public class Quiz {
 
-	private static final long serialVersionUID = 5474167520502610293L;
-	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="quiz_id")
-	private Long id;
-	
-	@Column(name="round")
-	protected int round;
-	
-	@Column(name="num")
-	protected int num;
-	
-	@Column(name="type")
-	protected String type;
-	
-	@Column(name="description")
-	protected String description;
-	
-	@Column(name="showtime")
-	private Timestamp showTime;
-	
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	int id;
+
+  @Column(name="title")
+  String title;
+
+  @Column(name="description")
+   String description;
+
+  @Basic(fetch = FetchType.LAZY)
+  @Lob
+  byte[] img;
+
+  @Column(name="type")
+   String type;
+
+  @Column(name="roundId")
+  int roundId;
+
 }

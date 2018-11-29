@@ -1,14 +1,18 @@
-$thick : 3px;
-$pad : 0.7em;
-$extra : calc(#{$pad} * 1.2);
-$color : #69d83d;
+@font-face {
+  font-family:'Evogria';
+  src: url('../../font/Evogria.otf');
+}
 
+$thick: 3px;
+$pad: 0.7em;
+$extra: calc(#{$pad} * 1.2);
+$color: #69d83d;
 
 .portfolio-experiment {
   background: #2d2d2d;
-  
+
   a {
-    color: white;
+    color: $color;
     padding: $pad $extra;
     display: inline-block;
     border: $thick solid transparent;
@@ -20,9 +24,9 @@ $color : #69d83d;
     .text {
       // padding: 0 0.3em;
       font-family: proxima-nova, monospace;
-      transform: translate3d(0,$pad,0);
+      transform: translate3d(0, $pad, 0);
       display: block;
-      transition: transform 0.4s cubic-bezier(.2,0,0,1) 0.4s;
+      transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1) 0.4s;
       opacity: 0.8;
       font-family: Evogria;
       font-size: 36.5px;
@@ -40,13 +44,11 @@ $color : #69d83d;
       height: $thick;
       background: $color;
       // z-index: -1;
-      transition: 
-        transform 0.8s cubic-bezier(1,0,.37,1) 0.2s,
-        right 0.2s cubic-bezier(.04,.48,0,1) 0.6s,
-        left 0.4s cubic-bezier(.04,.48,0,1) 0.6s;
+      transition: transform 0.8s cubic-bezier(1, 0, 0.37, 1) 0.2s,
+        right 0.2s cubic-bezier(0.04, 0.48, 0, 1) 0.6s,
+        left 0.4s cubic-bezier(0.04, 0.48, 0, 1) 0.6s;
       transform-origin: left;
     }
-
   }
 
   .line {
@@ -58,20 +60,20 @@ $color : #69d83d;
       width: $thick;
       bottom: -$thick;
       top: -$thick;
-      transform: scale3d(1,0,1);
-    }  
+      transform: scale3d(1, 0, 1);
+    }
 
     &.-top,
     &.-bottom {
       height: $thick;
       left: -$thick;
       right: -$thick;
-      transform: scale3d(0,1,1);
+      transform: scale3d(0, 1, 1);
     }
 
     &.-right {
       right: -$thick;
-      transition: transform 0.1s cubic-bezier(1,0,.65,1.01) 0.23s;
+      transition: transform 0.1s cubic-bezier(1, 0, 0.65, 1.01) 0.23s;
       transform-origin: top;
     }
 
@@ -89,35 +91,32 @@ $color : #69d83d;
 
     &.-bottom {
       bottom: -$thick;
-      transition: transform 0.3s cubic-bezier(1,0,.65,1.01);
+      transition: transform 0.3s cubic-bezier(1, 0, 0.65, 1.01);
       transform-origin: right;
-    }  
+    }
   }
 
   a:hover,
   a:active {
-
     .text {
-      transform: translate3d(0,0,0);
-      transition: transform 0.6s cubic-bezier(.2,0,0,1) 0.4s;
+      transform: translate3d(0, 0, 0);
+      transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1) 0.4s;
     }
 
     &:after {
-      transform: scale3d(0,1,1);
+      transform: scale3d(0, 1, 1);
       right: -$thick;
       left: -$thick;
       transform-origin: right;
-      transition: 
-        transform 0.2s cubic-bezier(1,0,.65,1.01) 0.17s,
-        right 0.2s cubic-bezier(1,0,.65,1.01),
-        left 0s 0.3s;
+      transition: transform 0.2s cubic-bezier(1, 0, 0.65, 1.01) 0.17s,
+        right 0.2s cubic-bezier(1, 0, 0.65, 1.01), left 0s 0.3s;
     }
 
     .line {
-      transform: scale3d(1,1,1);
+      transform: scale3d(1, 1, 1);
 
       &.-right {
-        transition: transform 0.1s cubic-bezier(1,0,.65,1.01) 0.2s;
+        transition: transform 0.1s cubic-bezier(1, 0, 0.65, 1.01) 0.2s;
         transform-origin: bottom;
       }
 
@@ -132,8 +131,9 @@ $color : #69d83d;
       }
 
       &.-bottom {
-        transition: transform 0.5s cubic-bezier(0,.53,.29,1) 0.56s;
+        transition: transform 0.5s cubic-bezier(0, 0.53, 0.29, 1) 0.56s;
         transform-origin: left;
       }
     }
-}}
+  }
+}

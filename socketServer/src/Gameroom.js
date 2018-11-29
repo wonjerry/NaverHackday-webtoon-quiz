@@ -13,7 +13,6 @@ class Gameroom {
     this.io = io
     this.clients = new Map()
     this.game = null
-    this.waitClients()
   }
 
   async waitClients() {
