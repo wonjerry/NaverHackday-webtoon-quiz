@@ -1,8 +1,10 @@
 import io from 'socket.io-client'
-
+import moment from 'moment'
 import { actionCreators as homeActionCreators } from './state/actions/home'
 import { actionCreators as waitingRoomActionCreators } from './state/actions/waitingRoom'
 import { actionCreators as quizActionCreators } from './state/actions/quiz'
+import { actionCreators as scoreActionCreators } from './state/actions/score'
+import { actionCreators as resultActionCreators } from './state/actions/result'
 
 const GAMESTATE = {
   READY: 0,
@@ -18,27 +20,32 @@ const setupSocket = (dispatch) => {
   socket = io('http://localhost:5000')
 
   socket.on('message', (message) => {
+    console.log(message)
     switch(message.state) {
       case GAMESTATE.READY:
+        dispatch(quizActionCreators.endGame(false))
         dispatch(homeActionCreators.enableStart(true))
         break
       case GAMESTATE.WAITING:
-        console.log(message)
         dispatch(waitingRoomActionCreators.setStartTime(message.startTime))
         break
       case GAMESTATE.START_QUIZ:
-        console.log(message.question)
-        // Set question and count time until endtime
         dispatch(waitingRoomActionCreators.startQuiz(true))
+        dispatch(quizActionCreators.endQuiz(false))
         dispatch(quizActionCreators.setQuestion(message.question))
+        dispatch(scoreActionCreators.restartQuiz(true))
         break
       case GAMESTATE.END_QUIZ:
-        // Set statics and count time until endtime 
+        dispatch(scoreActionCreators.restartQuiz(false))
+        dispatch(quizActionCreators.endQuiz(true))
+        dispatch(scoreActionCreators.setResult(message.result))
         break
       case GAMESTATE.TOTAL_RESULT:
-        // Set statics and end game
+        dispatch(quizActionCreators.endGame(true))
+        dispatch(waitingRoomActionCreators.startQuiz(false))
+        dispatch(scoreActionCreators.restartQuiz(false))
         dispatch(homeActionCreators.enableStart(false))
-        dispatch(waitingRoomActionCreators.enableStart(false))
+        dispatch(waitingRoomActionCreators.startQuiz(false))
         break
       default:
         // Do nothing.

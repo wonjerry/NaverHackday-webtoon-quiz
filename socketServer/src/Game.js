@@ -20,6 +20,7 @@ class Game {
       { answer: 1 },
       { answer: 1 },
       { answer: 1 },
+      { answer: 1 },
       { answer: 1 }
     ]
   ) {
@@ -36,10 +37,7 @@ class Game {
     this.state = GAMESTATE.WAITING
   }
 
-  startQuiz(clients) {
-    console.log(`Start Quiz: ${this.process.current}`)
-    this.state = GAMESTATE.START_QUIZ
-
+  setPlayers(clients) {
     clients.forEach((client, id) => {
       this.players.set(id, {
         answers: [],
@@ -49,20 +47,15 @@ class Game {
     })
   }
 
-  readyAnswers() {
-    console.log('Ready Answers')
-    this.state = GAMESTATE.READY_ANSWER_COUNT
+  startQuiz() {
+    console.log(`Start Quiz: ${this.process.current}`)
+    this.state = GAMESTATE.START_QUIZ
   }
 
   endQuiz() {
     console.log('End Quiz')
-    this.state = GAMESTATE.START_END
+    this.state = GAMESTATE.END_QUIZ
     return this.calculateResult()
-  }
-
-  readyNextQuiz() {
-    console.log('Ready Next Quiz')
-    this.state = GAMESTATE.READY_NEXT_QUIZ_COUNT
   }
 
   finishGame() {

@@ -46,9 +46,9 @@ class Home extends Component {
     }
     naverLogin.get_naver_userprofile('naverSignInCallback()')
     // TODO(wonjerry): Get startTime from api server.
-    // const { data } = await axios.get('')
+    const { data } = await axios.get('http://106.10.33.128:8080/api/startTime')
     this.setState({
-      startTime: 1543475201799
+      startTime: 1543584969961
     })
   }
 
@@ -58,7 +58,7 @@ class Home extends Component {
     })
   }
 
-  naverSignInCallback() {
+  naverSignInCallback(data) {
     const naverLogin = new window.naver_id_login(CLIENT_ID, REDIRECT_URI)
     // TODO(wonjerry): Get from redux store.
     const nickname = naverLogin.getProfileData('nickname')

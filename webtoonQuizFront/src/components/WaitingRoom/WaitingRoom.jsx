@@ -21,7 +21,8 @@ class WaitingRoom extends Component {
       remainTimeText: this.getStartTimeText(props.startTime)
     }
 
-    this.timer = setInterval(() => { 
+    this.timer = setInterval(() => {
+      console.log(moment().format('mm : ss'), moment(this.props.startTime).format('mm : ss'))
       if (moment().isSameOrAfter(this.props.startTime, 'second')) {
         clearInterval(this.timer)
       }
@@ -50,7 +51,7 @@ class WaitingRoom extends Component {
   }
 
   getStartTimeText(startTime) {
-    return moment(moment().diff(moment(startTime))).format('mm : ss')
+    return moment(moment(startTime).diff(moment())).format('mm : ss')
   }
 
   render() {

@@ -1,14 +1,15 @@
+import moment from 'moment'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Progress } from 'react-sweet-progress'
+import 'animate.css'
 import 'react-sweet-progress/lib/style.css'
 
 import Chat from './Chat/Chat'
 import WinnerList from './WinnerList/WinnerList.js'
 import SockJsClient from 'react-stomp'
 import { chatURL } from '../socketURL'
-import 'animate.css'
 
 import './Score.css'
 
@@ -20,8 +21,6 @@ const Container = styled.div`
   text-align: center;
   width: 100%;
 `
-
-const SCORE_TIME = 10
 
 let progress1 = ''
 let progress2 = ''
@@ -41,10 +40,19 @@ class Score extends Component {
       data: []
     }
   }
+
   componentDidMount() {
     this.setState({ answerCount: ['10', '88', '2'] })
     this.timerID = setInterval(() => this.progressTime(), 1000)
   }
+
+  static getDerivedStateFromProps(nextProps) {
+    if (nextProps.restartQuiz) {
+      nextProps.history.push('/Quiz')
+    }
+    return null
+  }
+
   componentWillUnmount() {
     clearInterval(this.timerID)
   }
@@ -208,7 +216,9 @@ class Score extends Component {
 const mapStateToProps = (state) => ({
   nickname: state.home.nickname,
   question: state.quiz.question,
-  answer: state.quiz.answer
+  answer: state.quiz.answer,
+  result: state.score.result,
+  restartQuiz: state.score.restartQuiz
 })
 
 export default connect(

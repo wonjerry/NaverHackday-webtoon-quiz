@@ -1,14 +1,14 @@
-import { actionTypes } from '../actions/home'
+import { actionTypes } from '../actions/waitingRoom'
 
 const initialState = {
-  startTime: 1543475201799,
-  startQuiz: true
+  startTime: 0,
+  startQuiz: false
 }
 
 const setStartTime = (state, { startTime }) => {
   return {
     ...state,
-    ...startTime
+    startTime
   }
 }
 

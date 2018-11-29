@@ -35,17 +35,28 @@ class Quiz extends Component {
 
   componentDidMount() {
     const endTime = moment().valueOf() + QUIZ_TIME
-    this.timer = setInterval(() => this.progressTime(endTime), 1000)
+    this.timer = setInterval(() => this.progressTime(endTime), 10)
+  }
+
+  static getDerivedStateFromProps(nextProps) {
+    if (nextProps.endQuiz) {
+      nextProps.history.push('/Score')
+    }
+
+    if (nextProps.endGame) {
+      nextProps.history.push('/Result')
+    }
+    return null
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
   }
 
   componentDidCatch(error, info) {
     this.setState({
       hasError: true
     })
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer)
   }
 
   isFinish(endTime) {
@@ -55,16 +66,15 @@ class Quiz extends Component {
 
   // TODO(wonjerry): Change time check logic
   progressTime(endTime) {
-    if (this.isFinish(endTime)) {
-      this.props.history.push('/Score')
-      return
-    }
-
     let diff = moment(endTime).diff(moment())
     diff = diff < 0 ? 0 : diff
     this.setState({
-      percent: Math.floor(QUIZ_TIME - diff) / QUIZ_TIME * 100
+      percent: (Math.floor(QUIZ_TIME - diff) / QUIZ_TIME) * 100
     })
+
+    if (this.isFinish(endTime)) {
+      clearInterval(this.timer) 
+    }
   }
 
   buttonChange(event, confirm) {
@@ -153,7 +163,9 @@ class Quiz extends Component {
 
 const mapStateToProps = (state) => ({
   question: state.quiz.question,
-  answer: state.quiz.answer
+  answer: state.quiz.answer,
+  endQuiz: state.quiz.endQuiz,
+  endGame: state.quiz.endGame
 })
 
 const mapDispatchToProps = {
