@@ -13,20 +13,20 @@ import lombok.*;
 @Table(name = "OptionQuiz")
 public class OptionQuiz extends Quiz {
 	@Builder
-	public OptionQuiz(String title, String description, String type, int roundId, String optionOne, String optionTwo,
-			String optionThree, String optionFour, int solution, int num, String imageName) {
+	public OptionQuiz(String title, String description, String imageName, int num, String type, int roundId,
+			String optionOne, String optionTwo, String optionThree, String optionFour, int solution) {
+
 		super.title = title;
 		super.description = description;
+		super.imageName = imageName;
 		super.type = type;
 		super.roundId = roundId;
 		super.num = num;
-		super.imageName = imageName;
 		this.optionOne = optionOne;
 		this.optionTwo = optionTwo;
 		this.optionThree = optionThree;
 		this.optionFour = optionFour;
 		this.solution = solution;
-
 	}
 
 	@Column(name = "option_one")

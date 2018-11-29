@@ -27,7 +27,7 @@ public class Quiz {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	protected int id;
+	protected long id;
 
 	@NotEmpty(message="주제 빈 칸을 채워주세요.")
 	@Column(name = "title")

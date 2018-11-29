@@ -18,7 +18,7 @@ public class OxQuizService {
         return oxQuizRepository.findAll();
     }
     
-    public OxQuiz findOne(int id) {
+    public OxQuiz findOne(long id) {
     	return oxQuizRepository.findOne(id);
     }
 

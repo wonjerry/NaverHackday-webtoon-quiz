@@ -52,11 +52,11 @@ public class MainControllerTest {
     mockMvc.perform(get("/api/optionQuizzes")).andDo(print());
   }
 
-  @Test
-  public void createOxQuizzes() throws Exception{
-    mockMvc.perform(post("/api/oxQuiz")
-     .contextPath("")
-    ).andExpect(status().isOk());
-  }
+//  @Test
+//  public void createOxQuizzes() throws Exception{
+//    mockMvc.perform(post("/api/oxQuiz")
+//     .contextPath("")
+//    ).andExpect(status().isOk());
+//  }
 
 }
