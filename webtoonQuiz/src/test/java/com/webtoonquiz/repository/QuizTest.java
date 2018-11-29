@@ -30,15 +30,14 @@ public class QuizTest {
     .build();
 
   OptionQuiz testOptionQuiz = OptionQuiz.builder()
-    .title("제목제목")
+    .title("제목입니다.")
     .description("내용내용")
-    .roundId(1)
+    .roundId(3)
     .type("option")
     .solution(3)
     .optionOne("1번 문제")
     .optionTwo("2번 문제")
     .optionThree("3번 문제")
-    .optionFour("4번 문제")
     .build();
 
 

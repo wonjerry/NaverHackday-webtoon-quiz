@@ -1,5 +1,7 @@
 package com.webtoonquiz.model;
 import lombok.Data;
+
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.*;
@@ -15,6 +17,6 @@ public class Round {
   int id;
 
   @Column(name="startTime")
-  Timestamp  type;
+  Time time;
 
 }

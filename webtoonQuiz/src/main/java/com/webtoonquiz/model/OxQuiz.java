@@ -16,12 +16,13 @@ import lombok.*;
 public class OxQuiz extends Quiz{
 
   @Builder
-  public OxQuiz(String title , String description, byte[] img, String type , int roundId ,int solution ) {
+  public OxQuiz(String title , String description, String img, int num, String type , int roundId ,int solution ) {
     super.title =title;
     super.description =description;
     super.img = img;
     super.type = type ;
     super.roundId = roundId;
+    super.num = num;
     this.solution =solution;
   }
 

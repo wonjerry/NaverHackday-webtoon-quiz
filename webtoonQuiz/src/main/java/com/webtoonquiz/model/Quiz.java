@@ -22,11 +22,13 @@ public class Quiz {
   @Column(name="description")
    String description;
 
-  @Basic(fetch = FetchType.LAZY)
-  @Lob
-  byte[] img;
+    @Column(name="imageName")
+    String img;
 
-  @Column(name="type")
+    @Column(name="num")
+    int num;
+
+    @Column(name="type")
    String type;
 
   @Column(name="roundId")

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
 import java.util.List;
 
 @RestController
@@ -37,14 +38,14 @@ public class MainController {
     public List<OptionQuiz> optionQuizzes() {
         return optionQuizService.getOptionQuizzes();}
 
-    @GetMapping("/quizzes")
+    @GetMapping("/quizzes/all")
     public List<Quiz> quizzes() {
         return quizService.getAllQuizzes();
     }
 
-  @GetMapping("/quizzes/{roundId}")
-  public List<Quiz> roundIdAllQuizzes(@PathVariable int roundId) {
-    return quizService.getRoundIdAllQuizzes(roundId);
+  @GetMapping("/quizzes/round")
+  public List<Quiz> roundIdAllQuizzes() {
+    return quizService.getLastRoundIdAllQuizzes();
   }
 
   @GetMapping("/rounds")
@@ -57,11 +58,17 @@ public class MainController {
     return quizService.CreateOptionQuiz(optionQuiz);
   }
 
+
   @PostMapping("/oxQuiz")
   public ResponseEntity<String> createOxQuiz(@RequestBody OxQuiz oxQuiz) {
     return quizService.CreateOxQuiz(oxQuiz);
   }
 
+
+    @GetMapping("/startTime")
+    public ResponseEntity<Time> startTime() {
+        return roundService.LastRoundStart();
+    }
 
 
 }

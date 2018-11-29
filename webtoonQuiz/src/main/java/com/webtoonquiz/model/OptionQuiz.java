@@ -16,7 +16,7 @@ import lombok.*;
 @Table(name = "OptionQuiz")
 public class OptionQuiz extends Quiz {
   @Builder
-  public OptionQuiz(String title , String description, byte[] img, String type , int roundId ,
+  public OptionQuiz(String title , String description, String img,int num, String type , int roundId ,
                      String optionOne , String optionTwo,String optionThree, String optionFour,int solution ) {
 
     super.title =title;
@@ -24,6 +24,7 @@ public class OptionQuiz extends Quiz {
     super.img = img;
     super.type = type ;
     super.roundId = roundId;
+    super.num = num;
     this.optionOne=optionOne;
     this.optionTwo=optionTwo;
     this.optionThree=optionThree;
@@ -45,5 +46,5 @@ public class OptionQuiz extends Quiz {
 	
 	@Column(name="solution")
 	 int solution;
-	
+
 }
