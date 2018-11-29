@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+const cors = require('cors')
 require('dotenv').config()
 
 const port = process.argv.slice(2, 3)
@@ -15,6 +16,7 @@ if (!port && !server) {
 const GameRoom = require('./Gameroom.js')
 
 app.use('/', express.static(path.join(__dirname, '../public')))
+app.use(cors());
 
 const gameroom = new GameRoom(io)
 
