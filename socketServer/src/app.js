@@ -27,6 +27,10 @@ io.on('connection', (socket) => {
     })
   })
 
+  socket.on('chat', (message) => {
+    io.emit('chat', { text: message.text })
+  })
+
   socket.on('disconnect', () => {
     console.log(`Client has disconnected: ${socket.id}`)
     gameroom.removeClient(socket)
