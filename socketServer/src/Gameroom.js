@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const axios = require('axios')
 const moment = require('moment')
 
@@ -15,6 +16,7 @@ class Gameroom {
     this.clients = new Map()
     this.game = null
     this.gameStartTime = 0
+    this.otherSurvivors = []
 
     this.waitClients()
   }
@@ -80,7 +82,7 @@ class Gameroom {
     this.game.setPlayers(this.clients)
     while (true) {
       this.game.startQuiz()
-      console.log( this.game.getCurrentQuestion())
+      console.log(this.game.getCurrentQuestion())
       this.broadCastMessage({
         state: this.game.state,
         question: this.game.getCurrentQuestion(),
@@ -90,11 +92,18 @@ class Gameroom {
 
       await utils.sleep(GAME_WAITING_TIME)
 
+      const result = this.game.endQuiz()
+      this.io.emit('sync survivors', { survivors: result.survivors })
+      await utils.sleep(1000)
+
+      this.syncSurvivors(result.survivors)
+      result.survivors = this.otherSurvivors
+      this.otherSurvivors = []
+
       if (this.game.isFinish()) {
         break
       }
 
-      const result = this.game.endQuiz()
       this.broadCastMessage({
         state: this.game.state,
         result
@@ -112,6 +121,12 @@ class Gameroom {
     })
 
     this.restart()
+  }
+
+  syncSurvivors(survivors) {
+    if (this.game.state == Game.GAMESTATE.END_QUIZ) {
+      this.otherSurvivors = this.otherSurvivors.concat(survivors)
+    }
   }
 
   restart() {

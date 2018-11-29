@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const redis = require('socket.io-redis')
 require('dotenv').config()
 
 const port = process.argv.slice(2, 3)
@@ -19,9 +20,11 @@ app.use(cors())
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
+io.adapter(redis({ host: '106.10.33.128', port: 6379 }))
+
 const gameroom = new GameRoom(io)
 
-io.set('origins', '*:*');
+io.set('transports', ['websocket', 'polling']);
 
 io.on('connection', (socket) => {
   console.log(`Client has connected!!:  ${socket.id}`)
@@ -43,21 +46,14 @@ io.on('connection', (socket) => {
     console.log(`Client has disconnected: ${socket.id}`)
     gameroom.removeClient(socket)
   })
-
-  socket.on('admin', (message) => {
-    console.log(`Admin client join: ${socket.id}`)
-    socket.emit('admin', { text: 'Admin client join' })
-
-    // TODO(wonjerry): get this signal from admin
-    socket.on('startNextQuiz', () => {
-      // Do nothing.
-      if (this.game.state == Game.GAMESTATE.END_QUIZ) {
-        this.game.startQuiz()
-      }
-    })
-  })
 })
 
-server.listen(Number(port), '0.0.0.0', () => {
-  console.log(`Listening on http://0.0.0.0:${port}/`)
+io.on('sync survivors', (message) => {
+  this.gameroom.syncSurvivors(message.survivors)
+})
+
+const { HOST, PORT } = process.env
+
+server.listen(PORT, HOST, () => {
+  console.log(`Listening on http://${HOST}:${PORT}/`)
 })

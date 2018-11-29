@@ -28,7 +28,6 @@ class Game {
   }
 
   setPlayers(clients) {
-    console.log(clients)
     clients.forEach((client, id) => {
       this.players.set(id, {
         answers: [],
