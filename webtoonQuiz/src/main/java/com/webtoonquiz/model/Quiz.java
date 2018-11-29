@@ -1,7 +1,8 @@
 package com.webtoonquiz.model;
 
-
 import javax.persistence.*;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -12,24 +13,28 @@ import lombok.Data;
 public class Quiz {
 
 	@Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	protected int id;
 
-  @Column(name="title")
-  String title;
+	@Column(name = "title")
+	protected String title;
 
-  @Column(name="description")
-   String description;
+	@Column(name = "description")
+	protected String description;
 
-  @Basic(fetch = FetchType.LAZY)
-  @Lob
-  byte[] img;
+	@Column(name = "type")
+	protected String type;
 
-  @Column(name="type")
-   String type;
+	@Column(name = "roundId")
+	protected int roundId;
+	
+	@Column(name = "num")
+	protected int num;
 
-  @Column(name="roundId")
-  int roundId;
-
+	@Transient
+	private MultipartFile file;
+	
+	@Column(name = "imageName")
+	protected String imageName;
 }

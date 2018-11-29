@@ -12,7 +12,7 @@ import com.webtoonquiz.model.User;
 @Controller
 public class DashboardController {
 
-    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    @RequestMapping(value = "/dashboard1", method = RequestMethod.GET)
     public ModelAndView dashboard() {
     	ModelAndView model = new ModelAndView();
     	model.addObject("users", getUsers());
