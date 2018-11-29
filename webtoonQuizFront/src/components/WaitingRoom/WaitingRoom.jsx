@@ -1,4 +1,3 @@
-import axios from 'axios'
 import moment from 'moment'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -7,9 +6,9 @@ import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
 
 import logo from '../../img/logo.svg'
-import { getSocket } from '../../socket'
 import { actionCreators } from '../../state/actions/home'
 import { getNaverLoginInfo } from '../../utils'
+
 
 import './Button.scss'
 import './Home.scss'
@@ -24,19 +23,18 @@ const Container = styled.div`
 
 const { CLIENT_ID, REDIRECT_URI } = getNaverLoginInfo()
 
-class Home extends Component {
+class WaitingRoom extends Component {
   constructor(props) {
     super(props)
     this.state = {
       hasError: false,
       buttonOpen: false,
     }
-    this.socket = this.getSocket()
     window.naverSignInCallback = this.naverSignInCallback.bind(this)
   }
 
   // TODO(wonjerry): Do it in redux-saga.
-  async componentDidMount() {
+  componentDidMount() {
     // setInterval(() => this.timeCheck(), 1000)
     const naverLogin = new window.naver_id_login(CLIENT_ID, REDIRECT_URI)
     // TODO(wonjerry): Get from redux store.
@@ -44,25 +42,12 @@ class Home extends Component {
       alert('로그인 해주세요.')
       this.props.history.push('/')
     }
-    naverLogin.get_naver_userprofile('naverSignInCallback()')
-    // TODO(wonjerry): Get startTime from api server.
-    // const { data } = await axios.get('')
-    this.setState({
-      startTime: 1543475201799
-    })
   }
 
   componentDidCatch(error, info) {
     this.setState({
       hasError: true
     })
-  }
-
-  naverSignInCallback() {
-    const naverLogin = new window.naver_id_login(CLIENT_ID, REDIRECT_URI)
-    // TODO(wonjerry): Get from redux store.
-    const nickname = naverLogin.getProfileData('nickname')
-    this.props.setNickname(nickname)
   }
 
   // TODO(wonjerry): Convert to moment.
@@ -84,9 +69,7 @@ class Home extends Component {
       <section
         className="portfolio-experiment"
         onClick={() => {
-          if (this.props.isStart) {
-            this.props.history.push('/Quiz')
-          }
+          this.props.history.push('/Quiz')
         }}
       >
         <a className="quiz_a">
@@ -140,15 +123,10 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  nickname: state.home.nickname,
-  startTime: state.home.startTime
+  startTime: state.waitingRoom.startTime
 })
-
-const mapDispatchToProps = {
-  setNickname: actionCreators.setNickname
-}
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(Home)
+  null
+)(WaitingRoom)

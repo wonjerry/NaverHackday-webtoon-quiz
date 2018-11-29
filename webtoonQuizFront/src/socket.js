@@ -1,21 +1,46 @@
 import io from 'socket.io-client'
 
-import { actionTypes as homeActionTypes } from './state/actions/home'
-import { actionTypes as quizActionTypes } from './state/actions/quiz'
+import { actionCreators as homeActionCreators } from './state/actions/home'
+import { actionCreators as quizActionCreators } from './state/actions/quiz'
+
+const GAMESTATE = {
+  READY: 0,
+  START_QUIZ: 1,
+  END_QUIZ: 2,
+  TOTAL_RESULT: 3
+}
+
+let socket = null
 
 const setupSocket = (dispatch) => {
-  const socket = io('http://localhost:5000')
+  socket = io('http://localhost:5000')
 
-  socket.emit('join game', {
-    nickname: 'wonjerry'
+  socket.on('message', (message) => {
+    switch(message.state) {
+      case GAMESTATE.READY:
+        // 만약 Home 이면은 home의 isStart true로
+        dispatch(homeActionCreators.enableStart(true))
+        break
+      case GAMESTATE.START_QUIZ:
+        // Set question and count time until endtime
+        break
+      case GAMESTATE.END_QUIZ:
+        // Set statics and count time until endtime 
+        break
+      case GAMESTATE.TOTAL_RESULT:
+        // Set statics and end game
+        dispatch(homeActionCreators.enableStart(false))
+        break
+      default:
+        // Do nothing.
+    }
   })
-
-  socket.on('waiting', ({ currentTime, endTime}) => {
-    console.log(endTime)
-  })
-  socket.on('disconnect', () => {})
 
   return socket
 }
 
-export { setupSocket }
+const getSocket = () => {
+  return socket
+}
+
+export { setupSocket, getSocket }

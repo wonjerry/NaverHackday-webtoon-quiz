@@ -5,13 +5,11 @@ import Home from './components/Home'
 import Quiz from './components/Quiz'
 import Score from './components/Score'
 import Result from './components/Result'
-import { setupSocket } from './socket'
 
 import './App.css'
 
 class App extends Component { 
   render() {
-    setupSocket()
     return (
       <Router>
         <div className="body">
