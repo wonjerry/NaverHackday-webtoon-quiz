@@ -1,22 +1,31 @@
 package com.webtoonquiz.model;
 
 import java.io.Serializable;
-
+import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Entity
 @Data
-@NoArgsConstructor
-@DiscriminatorValue("ox")
-public class OxQuiz extends Quiz implements Serializable {
-	
-	private static final long serialVersionUID = 1059539352613133985L;
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "OxQuiz")
+public class OxQuiz extends Quiz {
 
-	@Column(name="solution")
-	private int solution;
+	@Builder
+	public OxQuiz(String title, String description, String type, 
+			int roundId, int solution, int num, String imageName ) {
+		super.title = title;
+		super.description = description;
+		super.type = type;
+		super.roundId = roundId;
+		super.num = num;
+		super.imageName = imageName;
+		this.solution = solution;
+	}
+
+	@Column(name = "solution")
+	int solution;
 }

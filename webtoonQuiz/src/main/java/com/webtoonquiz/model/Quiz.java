@@ -1,47 +1,40 @@
 package com.webtoonquiz.model;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="type")
-public class Quiz implements Serializable {
+@Entity
+@Table(name = "Quiz")
+public class Quiz {
 
-	private static final long serialVersionUID = 5474167520502610293L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="quiz_id")
-	private Long id;
-	
-	@Column(name="round")
-	protected int round;
-	
-	@Column(name="num")
-	protected int num;
-	
-	@Column(name="type")
-	protected String type;
-	
-	@Column(name="description")
+	@Column(name = "id")
+	protected int id;
+
+	@Column(name = "title")
+	protected String title;
+
+	@Column(name = "description")
 	protected String description;
+
+	@Column(name = "type")
+	protected String type;
+
+	@Column(name = "roundId")
+	protected int roundId;
 	
-	@Column(name="showtime")
-	private Timestamp showTime;
+	@Column(name = "num")
+	protected int num;
+
+	@Transient
+	private MultipartFile file;
 	
+	@Column(name = "imageName")
+	protected String imageName;
 }
