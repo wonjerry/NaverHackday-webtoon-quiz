@@ -49,8 +49,31 @@ public class QuizService {
 		return list;
 	}
 
-	public synchronized boolean addQuiz(Quiz quiz) {
+	public synchronized boolean addQuiz(OptionQuiz quiz) {
 		List<Quiz> list = quizRepository.findByRoundIdAndNum(quiz.getRoundId(),quiz.getNum());
+		
+		if (list.size() > 0) {
+			return false;
+		} else {
+			quizRepository.save(quiz);
+			return true;
+		}
+	}
+	
+	public synchronized boolean addOptionQuiz(OptionQuiz quiz) {
+		List<Quiz> list = quizRepository.findByRoundIdAndNum(quiz.getRoundId(),quiz.getNum());
+		
+		if (list.size() > 0) {
+			return false;
+		} else {
+			quizRepository.save(quiz);
+			return true;
+		}
+	}
+	
+	public synchronized boolean addOxQuiz(OxQuiz quiz) {
+		List<Quiz> list = quizRepository.findByRoundIdAndNum(quiz.getRoundId(),quiz.getNum());
+		
 		if (list.size() > 0) {
 			return false;
 		} else {
@@ -67,7 +90,27 @@ public class QuizService {
 		quizRepository.save(quiz);
 	}
 	
-	public void deleteQuiz(long quizId) {
+	public void deleteQuiz(int quizId) {
 		quizRepository.delete(quizId);
+	}
+
+	public Quiz findQuizById(int id) {
+		return quizRepository.findOne(id);
+	}
+	
+	public OxQuiz findOxQuizById(int id) {
+		return (OxQuiz) quizRepository.findOne(id);
+	}
+	
+	public OptionQuiz findOptionQuizById(int id) {
+		return (OptionQuiz) quizRepository.findOne(id);
+	}
+
+	public void updateOxQuiz(OxQuiz quiz) {
+		quizRepository.save(quiz);
+	}
+
+	public void updateOptionQuiz(OptionQuiz quiz) {
+		quizRepository.save(quiz);
 	}
 }

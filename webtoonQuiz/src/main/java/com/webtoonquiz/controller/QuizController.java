@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.webtoonquiz.model.OptionQuiz;
 import com.webtoonquiz.model.Quiz;
 import com.webtoonquiz.service.QuizService;
 
@@ -42,9 +43,22 @@ public class QuizController {
 		logger.debug("Calling getAll( )");
 		return new ResponseEntity<List<Quiz>>(quizService.getAllQuizs(), HttpStatus.OK);
 	}
+	
 
 	@PostMapping(value = "/quizs")
-	public ResponseEntity<Void> postQuiz(@RequestBody Quiz quiz) {
+	public ResponseEntity<Void> postQuiz(@RequestBody OptionQuiz quiz) {
+		logger.debug("Calling postQuiz( )");
+
+		boolean flag = quizService.addQuiz(quiz);
+        if (flag == false) {
+        	return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
+
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	
+	@PostMapping(value = "/quizs/option")
+	public ResponseEntity<Void> postOptionQuiz(@RequestBody OptionQuiz quiz) {
 		logger.debug("Calling postQuiz( )");
 
 		boolean flag = quizService.addQuiz(quiz);
@@ -63,7 +77,7 @@ public class QuizController {
 	}
 
 	@DeleteMapping(value = "/quizs/{id}")
-	public ResponseEntity<Void> deleteQuiz(@PathVariable long id) {
+	public ResponseEntity<Void> deleteQuiz(@PathVariable int id) {
 		logger.debug("Calling deleteQuiz( )");
 		quizService.deleteQuiz(id);
 		

@@ -1,43 +1,53 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <div class="container-wrapper">
-	<div class="container">
-		<h2>퀴즈</h2>
-		<p>라운드</p>
+	<div class="container" style="margin:100px">
+		<h2>Quiz List</h2>
+		<br />
+		<p>Round ${roundId }</p>
 		<table class="table table-striped">
 			<thead>
 				<tr class="bg-success">
-					<th>Photo Thumb</th>
-					<th>Name</th>
-					<th>Category</th>
-					<th>Price</th>
-					<th>Manufacturer</th>
-					<th>UnitInStock</th>
-					<th>Description</th>
-					<th>Info</th>
+					<th>문제 사진</th>
+					<th>번호</th>
+					<th>주제</th>
+					<th>문제 설명</th>
+					<th>문제 종류</th>
+					<th>정보</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="product" items="${products }">
+				<c:forEach var="quiz" items="${quizs }">
 					<tr>
 						<td><img
-							src="<c:url value="/resources/images/${product.imageName}" />"
-							alt="image" style="width: 100%" /></td>
-						<td>${product.name }</td>
-						<td>${product.category}</td>
-						<td>${product.price}</td>
-						<td>${product.manufacturer}</td>
-						<td>${product.unitInStock}</td>
-						<td>${product.description}</td>
-						<td><a href="<c:url value="/viewProduct/${product.id}" />">
+							src="<c:url value="/ui/static/images/${quiz.imageName}" />"
+							alt="image" style="width: 100px" /></td>
+						<td>${quiz.num }</td>
+						<td>${quiz.title}</td>
+						<td>${quiz.description}</td>
+						<td>${quiz.type}</td>					
+						<td><a href="<c:url value="/admin/viewQuiz/${quiz.id}" />">
 								<i class="fa fa-info-circle"></i>
 						</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		<div class="row" style="padding:10px">
+        <div class="col-md-8 text-center"></div>
+        <div class="col-md-2 text-center"><a href="<c:url value="/admin/addOptionQuiz/${roundId }" />"
+        		class="btn btn-info">Option 문제 추가     </a></div>
+        <div class="col-md-2 text-center"><a href="<c:url value="/admin/addOxQuiz/${roundId }" />"
+						class="btn btn-info">OX 문제 추가</a></div>
+    </div>
 	</div>
+	
 </div>
+
+
+
     <!--<div class="row text-center"><strong> User Details</strong></div>
     <div class="row" style="border:1px solid green;padding:10px">
         <div class="col-md-4 text-center"><strong>Name</strong></div>
@@ -51,39 +61,3 @@
                 <div class="col-md-4 text-center">${user.address}</div>
             </div>
         </c:forEach>-->
-<script>
-const userAction = async () => {
-  
-const response = await fetch('http://localhost:8080/api/quizs');
-  
-const myJson = await response.json(); //extract JSON from the http response
-  
-  console.log(myJson);
-// do something with myJson
-
-}
-
-userAction();
-
-var httpRequest;
-
-function createRequest() {
-
-    if (window.XMLHttpRequest) { 
-
-        return new XMLHttpRequest();
-
-    } else {        
-
-        return new ActiveXObject("Microsoft.XMLHTTP");
-
-    }
-
-}
-
-var httpRequest = new XMLHttpRequest();
-
-httpRequest.open("DELETE", "http://localhost:8080/api/quizs/1", true);
-
-httpRequest.send("");
-</script>
