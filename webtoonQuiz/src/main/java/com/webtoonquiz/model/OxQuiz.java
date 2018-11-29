@@ -1,12 +1,13 @@
 package com.webtoonquiz.model;
 
-import java.io.Serializable;
-import javax.persistence.Table;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -15,18 +16,6 @@ import lombok.*;
 @NoArgsConstructor
 public class OxQuiz extends Quiz {
 
-<<<<<<< HEAD
-  @Builder
-  public OxQuiz(String title , String description, String img, int num, String type , int roundId ,int solution ) {
-    super.title =title;
-    super.description =description;
-    super.img = img;
-    super.type = type ;
-    super.roundId = roundId;
-    super.num = num;
-    this.solution =solution;
-  }
-=======
 	@Builder
 	public OxQuiz(String title, String description, String imageName, int num, String type, int roundId, int solution) {
 		super.title = title;
@@ -37,7 +26,6 @@ public class OxQuiz extends Quiz {
 		super.num = num;
 		this.solution = solution;
 	}
->>>>>>> master
 
 	@Column(name = "solution")
 	int solution;
