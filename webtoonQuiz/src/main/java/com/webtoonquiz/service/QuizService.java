@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.webtoonquiz.model.OptionQuiz;
 import com.webtoonquiz.model.OxQuiz;
+import com.webtoonquiz.model.Round;
+import com.webtoonquiz.repo.RoundRepository;
+import com.webtoonquiz.vo.QuizVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.webtoonquiz.model.Quiz;
 import com.webtoonquiz.repo.QuizRepository;
 
+import javax.swing.text.html.ListView;
 import javax.transaction.Transactional;
 
 @Service
@@ -20,9 +24,14 @@ public class QuizService {
 	@Autowired
 	private QuizRepository quizRepository;
 
+	@Autowired
+    private RoundRepository roundRepository;
+
 	public List<Quiz> getAllQuizzes() {
-		return quizRepository.findAll();
+        return quizRepository.findAll();
 	}
+
+
 
 	public List<Quiz> getRoundIdAllQuizzes(int roundId) {
 		return quizRepository.findAllByRoundIdOrderById(roundId);
@@ -94,23 +103,4 @@ public class QuizService {
 		quizRepository.delete(quizId);
 	}
 
-	public Quiz findQuizById(int id) {
-		return quizRepository.findOne(id);
-	}
-	
-	public OxQuiz findOxQuizById(int id) {
-		return (OxQuiz) quizRepository.findOne(id);
-	}
-	
-	public OptionQuiz findOptionQuizById(int id) {
-		return (OptionQuiz) quizRepository.findOne(id);
-	}
-
-	public void updateOxQuiz(OxQuiz quiz) {
-		quizRepository.save(quiz);
-	}
-
-	public void updateOptionQuiz(OptionQuiz quiz) {
-		quizRepository.save(quiz);
-	}
 }

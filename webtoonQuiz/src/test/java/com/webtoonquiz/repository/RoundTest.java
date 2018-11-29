@@ -18,4 +18,11 @@ public class RoundTest {
   public void getAllRoundTest(){
     System.out.println(roundRepository.findAll());
   }
+  @Test
+  public void countRoundTest(){
+    System.out.println(roundRepository.count());
+    System.out.println(roundRepository.findAll());
+
+  }
+
 }

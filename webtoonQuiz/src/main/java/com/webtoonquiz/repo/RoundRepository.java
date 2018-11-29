@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface RoundRepository extends JpaRepository<Round, Long> {
 
-  List<Round> findById(int id);
+  Round findById(int id);
+
+  List<Round> findAllByOrderByIdDesc();
 }

@@ -9,12 +9,15 @@ import com.webtoonquiz.service.OptionQuizService;
 import com.webtoonquiz.service.OxQuizService;
 import com.webtoonquiz.service.QuizService;
 import com.webtoonquiz.service.RoundService;
+import com.webtoonquiz.vo.QuizVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 public class MainController {
@@ -37,15 +40,15 @@ public class MainController {
     public List<OptionQuiz> optionQuizzes() {
         return optionQuizService.getOptionQuizzes();}
 
-    @GetMapping("/quizzes")
+    @GetMapping("/quizzes/all")
     public List<Quiz> quizzes() {
         return quizService.getAllQuizzes();
     }
 
-  @GetMapping("/quizzes/{roundId}")
-  public List<Quiz> roundIdAllQuizzes(@PathVariable int roundId) {
-    return quizService.getRoundIdAllQuizzes(roundId);
-  }
+  @GetMapping("/quizzes/round")
+  public List<QuizVO> roundIdAllQuizzes() {
+        return quizService.getLastRoundIdAllQuizzes();
+    }
 
   @GetMapping("/rounds")
   public List<Round> rounds() {
@@ -57,11 +60,17 @@ public class MainController {
     return quizService.CreateOptionQuiz(optionQuiz);
   }
 
+
   @PostMapping("/oxQuiz")
   public ResponseEntity<String> createOxQuiz(@RequestBody OxQuiz oxQuiz) {
     return quizService.CreateOxQuiz(oxQuiz);
   }
 
+
+    @GetMapping("/startTime")
+    public ResponseEntity<Timestamp> startTime() {
+        return roundService.LastRoundStart();
+    }
 
 
 }
