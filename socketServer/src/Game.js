@@ -37,6 +37,14 @@ class Game {
     })
   }
 
+  addPlayer(client) {
+    this.players.set(client.id, {
+      answers: [],
+      nickname: client.nickname,
+      isSurvivor: true
+    })
+  }
+
   getCurrentQuestion() {
     return this.quizzes[this.process.current - 1]
   }
@@ -78,7 +86,6 @@ class Game {
   }
 
   calculateResult() {
-    console.log(this.players)
     const correctAnswer = this.quizzes[this.process.current - 1].quiz.solution
     this.players.forEach((player, _) => {
       console.log(player.answers[this.process.current - 1], correctAnswer)

@@ -29,7 +29,7 @@ io.set('transports', ['websocket', 'polling']);
 io.on('connection', (socket) => {
   console.log(`Client has connected!!:  ${socket.id}`)
   socket.emit('message', {
-        state: 5,
+      state: 5,
       name: name,
   })
 
@@ -56,6 +56,14 @@ io.on('connection', (socket) => {
 io.in('game').on('sync survivors', (message) => {
   console.log(message)
   this.gameroom.syncSurvivors(message.survivors)
+})
+
+io.in('game').on('add player', (player) => {
+  this.gameroom.game.addPlayer(player)
+})
+
+io.in('game').on('set answer', (message) => {
+  this.gameroom.game.setAnswer(message.id, message.answer)
 })
 
 const { HOST, PORT } = process.env

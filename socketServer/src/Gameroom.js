@@ -54,7 +54,14 @@ class Gameroom {
         return
       }
       this.game.setAnswer(client.id, message.answer)
+      this.io.in('game').emit('set answer', { id: client.id, answer: message.answer})
     })
+    const player = {
+      id: client.id,
+      nickname: client.nickname
+    }
+    this.game.addPlayer(player)
+    this.io.in('game').emit('add player', player)
   }
 
   removeClient(client) {
@@ -64,47 +71,27 @@ class Gameroom {
 
   broadCastMessage(message) {
     console.log('in board: ' , this.name)
-    this.io.in('game').emit('message',{
+    this.io.in('game').emit('broad',{
         ...message,
         name: this.name
     })
   }
 
-  async startCountDown(millisecond) {
-    await Timer.start(millisecond, (fireTime, endTime) => {
-      this.broadCastMessage({
-        state: this.game.state,
-        currentTime: fireTime,
-        endTime
-      })
-    })
-  }
-
   async startGame() {
-    // TODO(wonjerry): Check the client is joined game.
-    this.game.setPlayers(this.clients)
     while (true) {
       this.game.startQuiz()
-      console.log(this.game.getCurrentQuestion())
       this.broadCastMessage({
         state: this.game.state,
         question: this.game.getCurrentQuestion(),
         questionNum: this.game.process.current,
         totalQuizSize: this.game.process.total
       })
+      console.log(this.players)
 
       await utils.sleep(GAME_WAITING_TIME)
 
       const result = this.game.endQuiz()
-      this.io.in('game').emit('sync survivors', {
-        name: this.name,
-        survivors: result.survivors
-      })
-      await utils.sleep(1000)
-
-      this.syncSurvivors(result.survivors)
-      result.survivors = this.otherSurvivors
-      this.otherSurvivors = []
+      console.log(this.players)
 
       if (this.game.isFinish()) {
         break
@@ -121,6 +108,7 @@ class Gameroom {
     }
 
     const totalResult = this.game.finishGame()
+    console.log(this.players)
     this.broadCastMessage({
       state: this.game.state,
       totalResult
