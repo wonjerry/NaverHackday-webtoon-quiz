@@ -11,16 +11,28 @@ const GAMESTATE = {
   WAITING: 1,
   START_QUIZ: 2,
   END_QUIZ: 3,
-  TOTAL_RESULT: 4
+  TOTAL_RESULT: 4,
+  INIT_SERVER_NAME: 5,
 }
 
 let socket = null
+let name = null
 
 const setupSocket = (dispatch) => {
-  socket = io('http://localhost:5000')
+  socket = io('ws://106.10.33.128:27017')
 
   socket.on('message', (message) => {
     console.log(message)
+    if (message.state === GAMESTATE.INIT_SERVER_NAME) {
+      name = message.name[0]
+      return
+    }
+
+    console.log(message.name, name)
+    if (message.name !== name) {
+      return
+    }
+
     switch (message.state) {
       case GAMESTATE.READY:
         dispatch(quizActionCreators.endGame(false))
