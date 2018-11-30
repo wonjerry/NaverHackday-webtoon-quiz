@@ -20,19 +20,24 @@ app.use(cors())
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
-io.adapter(redis({ host: '106.10.33.128', port: 6379 }))
+io.adapter(redis({ host: 'localhost', port: 6379 }))
 
-const gameroom = new GameRoom(io)
+const gameroom = new GameRoom(io, name)
 
 io.set('transports', ['websocket', 'polling']);
 
 io.on('connection', (socket) => {
   console.log(`Client has connected!!:  ${socket.id}`)
+  socket.emit('message', {
+        state: 5,
+      name: name,
+  })
 
   socket.on('join game', (message) => {
     console.log(`Client join Game: ${socket.id}`)
     gameroom.addClient(socket, message.nickname)
     socket.emit('message', {
+      name: name[0],
       state: gameroom.game.state,
       startTime: gameroom.gameStartTime
     })
@@ -48,7 +53,8 @@ io.on('connection', (socket) => {
   })
 })
 
-io.on('sync survivors', (message) => {
+io.in('game').on('sync survivors', (message) => {
+  console.log(message)
   this.gameroom.syncSurvivors(message.survivors)
 })
 

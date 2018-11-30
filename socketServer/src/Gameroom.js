@@ -11,8 +11,9 @@ const GAME_WAITING_TIME = 1000 * 5
 const SHOW_RESULT_TIME = 1000 * 5
 
 class Gameroom {
-  constructor(io) {
+  constructor(io, name) {
     this.io = io
+    this.name = name[0]
     this.clients = new Map()
     this.game = null
     this.gameStartTime = 0
@@ -62,9 +63,11 @@ class Gameroom {
   }
 
   broadCastMessage(message) {
-    const name = process.argv.slice(3, 4)
-    this.io.in('game').emit('message', { serverName: name })
-    this.io.in('game').emit('message', message)
+    console.log('in board: ' , this.name)
+    this.io.in('game').emit('message',{
+        ...message,
+        name: this.name
+    })
   }
 
   async startCountDown(millisecond) {
@@ -93,7 +96,10 @@ class Gameroom {
       await utils.sleep(GAME_WAITING_TIME)
 
       const result = this.game.endQuiz()
-      this.io.emit('sync survivors', { survivors: result.survivors })
+      this.io.in('game').emit('sync survivors', {
+        name: this.name,
+        survivors: result.survivors
+      })
       await utils.sleep(1000)
 
       this.syncSurvivors(result.survivors)
